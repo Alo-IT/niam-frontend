@@ -1,7 +1,9 @@
-export default function page() {
+"use client";
+
+export default function Dashboard() {
   return (
-    <div>
-      <h1>Page Not Found</h1>
-    </div>
+    <>
+      <h1>This is dashboard page</h1>
+    </>
   );
 }

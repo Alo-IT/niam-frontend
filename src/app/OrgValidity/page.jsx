@@ -1,16 +1,16 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import React, { useState, createContext, useContext } from "react";
+// import { useAuth } from "../global/contexts/AuthContext";
 
 export default function OrgValidity() {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isDomainValid, setIsDomainValid] = useState(false);
-  const [organizationDomain, setOrganizationDomain] = useState();
-
+  const [orgDomain, setOrgDomain] = useState("");
   const router = useRouter();
+  const [isDomainValid, setIsDomainValid] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,46 +18,25 @@ export default function OrgValidity() {
     setError(null);
 
     try {
-      const response = await fetch("/api/organization/validate-domain", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ organizationDomain }),
+      const response = await axios.post(`/api/niamadmin/searchorg`, {
+        orgDomain,
       });
-      if (!response.ok) {
-        setError(`Failed to validate domain`);
+
+      if (!response.data.success) {
+        setError(response.data.message);
         return;
       }
-      const data = await response.json();
-      if (!data.success) {
-        setError(data.message);
-        return;
-      }
-      setResponse(data); // set response state here
+
+      setResponse(response.data);
       setIsDomainValid(true);
+      console.log("Organization is valid");
+      router.push("/Login");
     } catch (error) {
       setError(`Failed to validate domain: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
   };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    // return <div>{error}</div>;
-  }
-
-  if (response && response.success) {
-    return;
-  }
-
-  if (response && !response.success) {
-    return <div>{response.message}</div>;
-  }
 
   return (
     <>
@@ -67,17 +46,9 @@ export default function OrgValidity() {
           type="text"
           placeholder="organizationdomain.com"
           required
-          value={organizationDomain}
-          onChange={(event) => setOrganizationDomain(event.target.value)}
+          value={orgDomain}
+          onChange={(event) => setOrgDomain(event.target.value)}
         />
-        <select
-          value={organizationDomain}
-          onChange={(event) => setOrganizationDomain(event.target.value)}
-        >
-          <option value="">Select organization</option>
-          <option value="aliio.inc">Aliio Inc.</option>
-          <option value="www.sardarbikes.com">Sardar Bikes</option>
-        </select>
         <button className="submitButton" type="submit" value="submit">
           Proceed
         </button>
