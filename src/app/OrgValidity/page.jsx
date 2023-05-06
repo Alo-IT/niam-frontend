@@ -1,7 +1,7 @@
 "use client";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { useAuthContext } from "../global/contexts/AuthContext";
 
 export default function OrgValidity() {
@@ -23,14 +23,16 @@ export default function OrgValidity() {
     handleLogout,
     handleOrgValidify,
   } = useAuthContext();
+
   // If user is not signed in, redirect to sign in page
   useEffect(() => {
-    if (!loggedIn) {
-      router.push("/OrgValidity");
+    if (loggedIn) {
+      router.push("/Dashboard");
       console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
-      // return null;
     } else if (!loggedIn && isAuthenticated) {
       router.push("/Login");
+    } else {
+      console.log("What the fuck is wrong with org?");
     }
   }, [loggedIn, router]);
 
@@ -63,6 +65,11 @@ export default function OrgValidity() {
 
   return (
     <>
+      {/* {isAuthenticated ? (
+        <>
+          <h1>Domain is valid</h1>
+        </>
+      ) : ( */}
       <form onSubmit={handleSubmit} className="organizationDomainForm">
         <label htmlFor="organizationdomain">Organization domain</label>
         <input
@@ -81,6 +88,7 @@ export default function OrgValidity() {
           </div>
         )}
       </form>
+      {/* )} */}
     </>
   );
 }

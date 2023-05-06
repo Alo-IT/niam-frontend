@@ -5,66 +5,65 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState();
-  const [localLoggedIn, setLocalLoggedIn] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
   const router = useRouter();
   useEffect(() => {
-    const loggedInStatus = JSON.parse(localStorage.getItem("loggedIn"));
+    // Check if user is authenticated
     const orgValidityStatus = JSON.parse(
       localStorage.getItem("isAuthenticated")
     );
     if (orgValidityStatus == null || orgValidityStatus == false) {
+      // If user is not authenticated, redirect to OrgValidity page
       setIsAuthenticated(false);
       localStorage.setItem("isAuthenticated", false);
+    } else {
+      // If user is logged in, set the logged in state to true
+      setIsAuthenticated(true);
+      localStorage.setItem("isAuthenticated", true);
     }
 
-    if (isAuthenticated) {
-      // console.log("loggedInStatus: ", loggedInStatus);
-      if (loggedInStatus == null || loggedInStatus == false) {
-        setLoggedIn(false);
-        localStorage.setItem("loggedIn", false);
-        // console.log("Login status 1: ", loggedIn);
-      } else if (loggedInStatus == true) {
-        setLoggedIn(true);
-        setIsAuthenticated(true);
-        localStorage.setItem("loggedIn", true);
-        // console.log("Login status 2: ", loggedIn);
-      }
+    // If user is authenticated, check if they are logged in
+    const loggedInStatus = JSON.parse(localStorage.getItem("loggedIn"));
+    if (loggedInStatus == null || loggedInStatus == false) {
+      // If user is not logged in, set the logged in state to false
+      setLoggedIn(false);
+      localStorage.setItem("loggedIn", false);
     } else {
-      router.push("/OrgValidity");
+      // If user is logged in, set the logged in state to true
+      setLoggedIn(true);
+      localStorage.setItem("loggedIn", true);
     }
-  }, [setLoggedIn]);
+  }, [setIsAuthenticated, setLoggedIn]);
+
+  // useEffect  (()=>{
 
   const handleOrgValidify = () => {
+    // Set user as authenticated
     setIsAuthenticated(true);
     localStorage.setItem("isAuthenticated", true);
   };
 
   const handleLogin = () => {
+    // Set logged in state to true and log the updated value
     setLoggedIn(true);
-    // setLocalLoggedIn(true);
     localStorage.setItem("loggedIn", true);
-
-    console.log("Login status 3: ", loggedIn);
   };
 
   const handleLogout = () => {
+    // Set logged in state and authentication status to false
     setLoggedIn(false);
     localStorage.setItem("loggedIn", false);
-
     setIsAuthenticated(false);
     localStorage.setItem("isAuthenticated", false);
   };
+  // }, [])
 
   return (
     <AuthContext.Provider
       value={{
         loggedIn,
-        setLoggedIn,
-        localLoggedIn,
-        setLocalLoggedIn,
         isAuthenticated,
         setIsAuthenticated,
         handleLogin,

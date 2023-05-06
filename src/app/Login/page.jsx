@@ -30,15 +30,17 @@ export default function Login() {
   // }, [loggedIn, router]);
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && isAuthenticated) {
       router.push("/Dashboard");
-      console.log("Login status 5: ", loggedIn);
-      console.log("Already signed in.");
-    } else if (!loggedIn) {
+      // console.log("Login status 5: ", loggedIn);
+      console.log("Logged in, going to Dashboard");
+    } else if (!loggedIn && !isAuthenticated) {
       router.push("/OrgValidity");
       console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
     } else if (!loggedIn && isAuthenticated) {
       router.push("/Login");
+    } else {
+      console.log("What the fuck is going on! I don't know.");
     }
   }, [loggedIn, router]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -80,6 +82,7 @@ export default function Login() {
 
   return (
     <>
+      {console.log("Login status Signin onload: ", loggedIn)}
       <div
         style={{
           display: "flex",

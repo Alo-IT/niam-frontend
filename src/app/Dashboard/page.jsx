@@ -24,13 +24,14 @@ export default function Dashboard() {
   useEffect(() => {
     if (!loggedIn) {
       router.push("/OrgValidity");
-      console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
+      // console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
       // return null;
     }
   }, [loggedIn, router]);
 
   return (
     <>
+      {console.log("Login status Dashboard onload: ", loggedIn)}
       <div>
         <Button
           type="primary"
