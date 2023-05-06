@@ -1,8 +1,8 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState, createContext, useContext } from "react";
-// import { useAuth } from "../global/contexts/AuthContext";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../global/contexts/AuthContext";
 
 export default function OrgValidity() {
   const [response, setResponse] = useState(null);
@@ -11,6 +11,28 @@ export default function OrgValidity() {
   const [orgDomain, setOrgDomain] = useState("");
   const router = useRouter();
   const [isDomainValid, setIsDomainValid] = useState(false);
+
+  const {
+    loggedIn,
+    setLoggedIn,
+    localLoggedIn,
+    setLocalLoggedIn,
+    isAuthenticated,
+    setIsAuthenticated,
+    handleLogin,
+    handleLogout,
+    handleOrgValidify,
+  } = useAuthContext();
+  // If user is not signed in, redirect to sign in page
+  useEffect(() => {
+    if (!loggedIn) {
+      router.push("/OrgValidity");
+      console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
+      // return null;
+    } else if (!loggedIn && isAuthenticated) {
+      router.push("/Login");
+    }
+  }, [loggedIn, router]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,6 +51,7 @@ export default function OrgValidity() {
 
       setResponse(response.data);
       setIsDomainValid(true);
+      handleOrgValidify();
       console.log("Organization is valid");
       router.push("/Login");
     } catch (error) {

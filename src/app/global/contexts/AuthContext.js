@@ -1,21 +1,80 @@
 "use client";
-
-import { createContext, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
-const AuthContextProvider = ({ children }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState();
+  const [localLoggedIn, setLocalLoggedIn] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const values = {
-    email,
-    setEmail,
-    password,
-    setPassword,
+  const router = useRouter();
+  useEffect(() => {
+    const loggedInStatus = JSON.parse(localStorage.getItem("loggedIn"));
+    const orgValidityStatus = JSON.parse(
+      localStorage.getItem("isAuthenticated")
+    );
+    if (orgValidityStatus == null || orgValidityStatus == false) {
+      setIsAuthenticated(false);
+      localStorage.setItem("isAuthenticated", false);
+    }
+
+    if (isAuthenticated) {
+      // console.log("loggedInStatus: ", loggedInStatus);
+      if (loggedInStatus == null || loggedInStatus == false) {
+        setLoggedIn(false);
+        localStorage.setItem("loggedIn", false);
+        // console.log("Login status 1: ", loggedIn);
+      } else if (loggedInStatus == true) {
+        setLoggedIn(true);
+        setIsAuthenticated(true);
+        localStorage.setItem("loggedIn", true);
+        // console.log("Login status 2: ", loggedIn);
+      }
+    } else {
+      router.push("/OrgValidity");
+    }
+  }, [setLoggedIn]);
+
+  const handleOrgValidify = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem("isAuthenticated", true);
   };
 
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
+  const handleLogin = () => {
+    setLoggedIn(true);
+    // setLocalLoggedIn(true);
+    localStorage.setItem("loggedIn", true);
+
+    console.log("Login status 3: ", loggedIn);
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    localStorage.setItem("loggedIn", false);
+
+    setIsAuthenticated(false);
+    localStorage.setItem("isAuthenticated", false);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        setLoggedIn,
+        localLoggedIn,
+        setLocalLoggedIn,
+        isAuthenticated,
+        setIsAuthenticated,
+        handleLogin,
+        handleLogout,
+        handleOrgValidify,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export { AuthContext, AuthContextProvider };
+export const useAuthContext = () => useContext(AuthContext);

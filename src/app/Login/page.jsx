@@ -1,67 +1,146 @@
 "use client";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import axios from "../api/axios";
 import { useRouter } from "next/navigation";
+import { Form, Input, Button, Typography } from "antd";
+import { useAuthContext } from "../global/contexts/AuthContext";
+import { LoginOutlined } from "@ant-design/icons";
+const { Title } = Typography;
 
 export default function Login() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const {
+    loggedIn,
+    setLoggedIn,
+    localLoggedIn,
+    setLocalLoggedIn,
+    isAuthenticated,
+    setIsAuthenticated,
+    handleLogin,
+    handleLogout,
+    handleOrgValidify,
+  } = useAuthContext();
   const router = useRouter();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    setError(null);
+  // useEffect(() => {
+  //   if (!loggedIn) {
+  //     router.push("/OrgValidity");
+  //     console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
+  //     // return null;
+  //   }
+  // }, [loggedIn, router]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      router.push("/Dashboard");
+      console.log("Login status 5: ", loggedIn);
+      console.log("Already signed in.");
+    } else if (!loggedIn) {
+      router.push("/OrgValidity");
+      console.log("Logged in status coming from Admin Dashboard: ", loggedIn);
+    } else if (!loggedIn && isAuthenticated) {
+      router.push("/Login");
+    }
+  }, [loggedIn, router]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [form] = Form.useForm();
+  const [formLayout, setFormLayout] = useState("vertical");
+  const onFormLayoutChange = ({ layout }) => {
+    setFormLayout(layout);
+  };
+  const formItemLayout =
+    formLayout === "vertical"
+      ? {
+          labelCol: {
+            span: 30,
+          },
+          wrapperCol: {
+            span: 30,
+          },
+        }
+      : null;
+
+  const onFinish = async (values) => {
+    const formData = {
+      email: values.email,
+      password: values.password,
+    };
     try {
-      const response = await axios.post("/api/auth/niamadminlogin", {
-        email,
-        password,
-      });
+      const response = await axios.post("/auth/niamadminlogin", formData);
       console.log(response.data);
 
-      if (!response.data.success) {
-        setError(response.data.message);
-        return;
-      }
+      // set loggedIn and loggedIn to true
+      handleLogin();
 
-      setResponse(response.data);
-      setIsLoggedIn(true);
-      console.log("Login successful");
       router.push("/Dashboard");
     } catch (error) {
-      setError(`Failed to validate domain: ${error.message}`);
-    } finally {
-      setIsLoading(false);
+      console.log(error.response.data);
+      setErrorMessage(error.response.data.message);
     }
   };
 
-  // if (typeof window === "undefined") {
-  //   return null;
-  // }
-
   return (
-    <form onSubmit={handleSubmit} className="organizationDomainForm">
-      <input
-        type="email"
-        placeholder="Email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    </form>
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        {console.log("Login status 6: ", loggedIn)}
+        <Form
+          {...formItemLayout}
+          layout={formLayout}
+          form={form}
+          initialValues={{
+            layout: formLayout,
+          }}
+          onValuesChange={onFormLayoutChange}
+          size="large"
+          onFinish={onFinish}
+          style={{
+            maxWidth: "80vw",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Title level={3}>Sign In</Title>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email address",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          {errorMessage && (
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Alert message={errorMessage} type="error" />
+            </Form.Item>
+          )}
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={<LoginOutlined />}
+              size="large"
+              style={{ background: "#1ED760", color: "white", fontWeight: 500 }}
+            >
+              Sign in
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
   );
 }
