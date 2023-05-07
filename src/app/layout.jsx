@@ -1,5 +1,5 @@
 "use client";
-import "./globals.css";
+// import "./globals.css";
 import { metadata } from "./global/constants/metadata";
 import NavBar from "./components/NavBar";
 import { AuthProvider } from "./global/contexts/AuthContext";
