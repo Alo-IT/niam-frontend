@@ -936,6 +936,19 @@ button.ant-btn.bell strong {
   border-radius: 12px;
 }
 
+.grantedAccess {
+  background-color: #dbeeff;
+}
+.accessApproved {
+  background-color: #f3f0f9;
+}
+.pendingApproval {
+  background-color: #dad7fe;
+}
+.waitingApproval {
+  background-color: #e2fbd7;
+}
+
 .number span {
   font-weight: 600;
   color: #8c8c8c;
@@ -951,6 +964,10 @@ button.ant-btn.bell strong {
   font-weight: 600;
   font-size: 14px;
 }
+.number:hover {
+  cursor: pointer;
+}
+
 .icon-box {
   width: 48px;
   height: 48px;
@@ -1093,7 +1110,7 @@ span.blue {
   border-bottom: 1px solid #0000000d;
   padding: 8px 0px;
   color: #8c8c8c;
-  font-size: 12px;
+  font-size: 1.6em;
   font-weight: 600;
 }
 
