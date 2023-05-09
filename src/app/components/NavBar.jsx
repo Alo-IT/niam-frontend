@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAuth } from "../global/contexts/AuthContext.js";
+import { useAuthContext } from "../global/contexts/AuthContext.js";
 import AuthorizedNavbar from "./Navbars/AuthorizedNavbar.jsx";
 import PublicNavbar from "./Navbars/PublicNavbar.jsx";
 

@@ -854,13 +854,23 @@ export default function Dashboard() {
           </Col>
         </Row>
       </div>
-      <div className="logoutButton">
+      <div
+        className="logoutButton"
+        align="middle"
+        justify="center"
+        style={{ width: "100vw" }}
+      >
         <Button
-          align="middle"
-          justify="center"
           type="primary"
           size="large"
-          style={{ background: "#F44336", color: "white", fontWeight: 500 }}
+          style={{
+            background: "#F44336",
+            color: "white",
+            fontWeight: 500,
+            padding: "10px 30px",
+            margin: "0 0",
+            lineHeight: "1.1em",
+          }}
           icon={<LogoutOutlined />}
           onClick={handleLogout}
         >
