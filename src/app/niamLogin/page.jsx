@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "../api/axios";
 import Link from "next/link";
 import {
   Layout,
@@ -109,7 +110,7 @@ const signin = [
   </svg>,
 ];
 
-export default function niamLogin() {
+export default function NiamLogin() {
   const {
     signedIn,
     isAuthenticated,
@@ -126,16 +127,32 @@ export default function niamLogin() {
       router.push("/NiamAdminDash");
       console.log("Logged in, going to NiamAdminDash");
     } else if (!signedIn) {
-      console.log("Rerouting to niamLogin");
-      router.push("/niamLogin");
+      console.log("Rerouting to NiamLogin");
+      router.push("/NiamLogin");
     } else {
       console.log("What the fuck is going on! I don't know.");
     }
   }, [signedIn, router]);
   const [errorMessage, setErrorMessage] = useState("");
   const [form] = Form.useForm();
+  const [formLayout, setFormLayout] = useState("vertical");
+  const onFormLayoutChange = ({ layout }) => {
+    setFormLayout(layout);
+  };
+  const formItemLayout =
+    formLayout === "vertical"
+      ? {
+          labelCol: {
+            span: 30,
+          },
+          wrapperCol: {
+            span: 30,
+          },
+        }
+      : null;
 
   const onFinish = async (values) => {
+    console.log("Sending data....");
     const formData = {
       email: values.email,
       password: values.password,
@@ -231,12 +248,6 @@ export default function niamLogin() {
                     SIGN IN
                   </Button>
                 </Form.Item>
-                {/* <p className="font-semibold text-muted">
-                  Don't have an account?{" "}
-                  <Link href="/SignUp" className="text-dark font-bold">
-                    Sign Up
-                  </Link>
-                </p> */}
               </Form>
             </Col>
             <Col
@@ -255,6 +266,48 @@ export default function niamLogin() {
           </Row>
         </Content>
       </Layout>
+      {/* <Form
+        {...formItemLayout}
+        layout={formLayout}
+        form={form}
+        initialValues={{
+          layout: formLayout,
+        }}
+        onValuesChange={onFormLayoutChange}
+        size="large"
+        onFinish={onFinish}
+      >
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please input your email address",
+            },
+          ]}
+        >
+          <Input placeholder="Email" />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password placeholder="Password" />
+        </Form.Item>
+        {errorMessage && (
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Alert message={errorMessage} type="error" />
+          </Form.Item>
+        )}
+        <Form.Item>
+          <Button type="primary" htmlType="submit" size="large">
+            SIGN IN
+          </Button>
+        </Form.Item>
+      </Form> */}
     </>
   );
 }

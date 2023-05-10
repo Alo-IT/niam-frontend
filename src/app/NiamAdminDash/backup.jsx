@@ -37,7 +37,6 @@ import {
   Card,
   Col,
   Row,
-  Form,
   Typography,
   Tooltip,
   Progress,
@@ -48,7 +47,6 @@ import {
   Radio,
   Avatar,
   Table,
-  Select,
 } from "antd";
 
 import Paragraph from "antd/lib/typography/Paragraph";
@@ -402,7 +400,7 @@ export default function NiamAdminDash() {
       async function fetchOrgs() {
         try {
           const response = await axios.get("/api/niamadmin/allorg");
-          setOrgs(response.data.data || []);
+          setOrgs(response.data.data);
           console.log("Ogrs loaded: ", response.data.data.length);
         } catch (error) {
           console.log(error.response.data);
@@ -414,20 +412,51 @@ export default function NiamAdminDash() {
     }
   }, [signedIn, router]);
 
-  const [selectedOrg, setSelectedOrg] = useState("");
-
-  const handleOrgChange = (value) => {
-    setSelectedOrg(value);
-  };
-
-  const orgsArray = Object.keys(orgs).map((key) => ({
-    label: orgs[key],
-    value: key,
-  }));
-
   return (
     <>
       <Title>Organization Admin Dashboard</Title>
+      <div
+        className="summaryCards"
+        gutter={[24, 50]}
+        xs="22"
+        lg={22}
+        style={{
+          paddingLeft: "50px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Row className="rowgap-vbox" gutter={[24, 0]}>
+          {count.map((c, index) => (
+            <Col key={index} xs="5" lg={5} className="mb-24">
+              <div className="circlebox">
+                <Card
+                  bordered={false}
+                  className={c.className}
+                  style={{
+                    width: "15vw",
+                    margin: "0 30px",
+                  }}
+                >
+                  <div className="number">
+                    <Row align="middle" gutter={[8, 0]} justify="center">
+                      <Col xs={24} align="middle" justify="center">
+                        <Title
+                          level={5}
+                          style={{ marginBottom: "24px", fontSize: "3em" }}
+                        >
+                          {c.number}
+                        </Title>
+                        <span>{c.title}</span>
+                      </Col>
+                    </Row>
+                  </div>
+                </Card>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
       <div
         className="summaryCards"
         gutter={[24, 50]}
@@ -469,24 +498,80 @@ export default function NiamAdminDash() {
           </Col>
         </Row>
       </div>
-      <Form.Item label="Check Organization" className="checkOrg">
-        <Select
-          showSearch
-          placeholder="Select an org"
-          optionFilterProp="children"
-          onSearch={() => {}}
-          filterOption={(input, option) =>
-            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-          onChange={handleOrgChange}
-          // options={orgs.map((org) => ({
-          //   label: org,
-          //   value: org,
-          // }))}
-          options={orgsArray}
-        />
-        {console.log("Orgs for select: ", orgs)}
-      </Form.Item>
+      <div className="tabled" style={{ marginLeft: "5vw" }}>
+        <Row gutter={[24, 0]}>
+          <Col xs={24} sm={24} md={22} lg={22} xl={22} className="mb-24">
+            <Card bordered={false} className="criclebox cardbody h-full">
+              <div className="project-ant">
+                <div>
+                  <Title level={5}>Application Dashboard</Title>
+                </div>
+              </div>
+              <div className="ant-list-box table-responsive">
+                <table className="width-100">
+                  <thead>
+                    <tr>
+                      <th>Apps</th>
+                      <th>Role</th>
+                      <th>Right</th>
+                      <th>Access Since</th>
+                      <th>Ticket No</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list.map((d, index) => (
+                      <tr key={index}>
+                        <td>
+                          <h6>
+                            <Image
+                              src={d.img}
+                              alt=""
+                              className="avatar-sm mr-10"
+                            />{" "}
+                            {d.Title}
+                          </h6>
+                        </td>
+                        <td>{d.roles}</td>
+                        <td>
+                          <span className="text-xs font-weight-bold">
+                            {d.rights}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="percent-progress">
+                            {d.accessSince}
+                          </div>
+                        </td>
+                        <td>
+                          <span className="text-xs font-weight-bold">
+                            {d.ticketNo}{" "}
+                          </span>
+                        </td>
+                        <td>
+                          <span className="text-xs font-weight-bold">
+                            <Button type="primary">Revoke</Button>
+                            <Button
+                              style={{
+                                background: "#fd6100",
+                                color: "#ffffff",
+                                marginLeft: "20px",
+                              }}
+                              type="secondary"
+                            >
+                              Change
+                            </Button>
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </div>
       <div
         className="logoutButton"
         align="middle"
