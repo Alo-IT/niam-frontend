@@ -54,6 +54,7 @@ import {
 import Paragraph from "antd/lib/typography/Paragraph";
 import Link from "next/link";
 import Image from "next/image";
+import TextArea from "antd/es/input/TextArea";
 
 const { Title, Text } = Typography;
 const onChange = (e) => console.log(`radio checked:${e.target.value}`);
@@ -415,15 +416,38 @@ export default function NiamAdminDash() {
   }, [signedIn, router]);
 
   const [selectedOrg, setSelectedOrg] = useState("");
-
+  // useEffect(() => {
+  //   setSelectedOrg(value);
+  // }, [setSelectedOrg]);
   const handleOrgChange = (value) => {
     setSelectedOrg(value);
   };
 
-  const orgsArray = Object.keys(orgs).map((key) => ({
-    label: orgs[key],
-    value: key,
+  const orgsArray = Object.values(orgs).map((org) => ({
+    label: org.orgDomain, // Replace with the desired property for the label
+    value: org._id, // Replace with the desired property for the value
   }));
+
+  // const [reason, setReason] = useState("");
+  // const handleReason = (value) => {
+  //   setReason(value);
+  // }
+
+  const [orgInfo, setOrgInfo] = useState("");
+  const handleOrgSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = {
+      orgDomain: selectedOrg,
+    };
+    try {
+      const response = await axios.post("/api/niamadmin/searchorg", formData);
+      console.log(response.data);
+      setOrgInfo(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
 
   return (
     <>
@@ -469,24 +493,52 @@ export default function NiamAdminDash() {
           </Col>
         </Row>
       </div>
-      <Form.Item label="Check Organization" className="checkOrg">
-        <Select
-          showSearch
-          placeholder="Select an org"
-          optionFilterProp="children"
-          onSearch={() => {}}
-          filterOption={(input, option) =>
-            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-          onChange={handleOrgChange}
-          // options={orgs.map((org) => ({
-          //   label: org,
-          //   value: org,
-          // }))}
-          options={orgsArray}
-        />
-        {console.log("Orgs for select: ", orgs)}
-      </Form.Item>
+      <Form
+        labelCol={{
+          span: 4,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="horizontal"
+        style={{
+          maxWidth: "90vw",
+        }}
+        onSubmit={handleOrgSubmit}
+      >
+        <Form.Item label="Check Organization" className="checkOrg">
+          <Select
+            showSearch
+            placeholder="Select an org"
+            optionFilterProp="children"
+            style={{ width: 320 }}
+            onSearch={() => {}}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            onChange={handleOrgChange}
+            options={orgsArray}
+          />
+          {console.log("Orgs for select: ", orgs)}
+        </Form.Item>
+        <Form.Item label="Reason">
+          <TextArea
+            showCount
+            maxLength={400}
+            style={{ width: 320 }}
+            onChange={(e) => {
+              e.target.value;
+            }}
+          />
+        </Form.Item>
+        <br />
+        <Button type="primary" htmlType="submit">
+          Check Organization Details
+        </Button>
+      </Form>
+      <div className="orgDetails">
+        <p>{orgInfo}</p>
+      </div>
       <div
         className="logoutButton"
         align="middle"
