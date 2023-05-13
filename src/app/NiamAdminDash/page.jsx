@@ -533,7 +533,7 @@ export default function NiamAdminDash() {
         </Form.Item>
         <br />
         <Button type="primary" htmlType="submit">
-          Check Organization Details
+          Check Organization
         </Button>
       </Form>
       <div className="orgDetails">
