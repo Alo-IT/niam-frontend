@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "../api/axios";
+import axios from "axios";
 import Link from "next/link";
+import urls from "../urls";
 import {
   Layout,
   Menu,
@@ -158,7 +159,13 @@ export default function NiamLogin() {
       password: values.password,
     };
     try {
-      const response = await axios.post("/auth/niamadminlogin", formData);
+      const response = await axios.post(
+        urls.baseURL + "/auth/niamadminlogin",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
 
       // set loggedIn and loggedIn to true

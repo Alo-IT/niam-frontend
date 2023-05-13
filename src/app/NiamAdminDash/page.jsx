@@ -55,6 +55,7 @@ import Paragraph from "antd/lib/typography/Paragraph";
 import Link from "next/link";
 import Image from "next/image";
 import TextArea from "antd/es/input/TextArea";
+import urls from "../urls";
 
 const { Title, Text } = Typography;
 const onChange = (e) => console.log(`radio checked:${e.target.value}`);
@@ -402,7 +403,13 @@ export default function NiamAdminDash() {
     } else if (signedIn) {
       async function fetchOrgs() {
         try {
-          const response = await axios.get("/api/niamadmin/allorg");
+          const response = await axios.get(
+            // "https://niambackend.cyclic.app/api/niamadmin/allorg",
+            urls.baseURL + "/niamadmin/allorg",
+            {
+              withCredentials: true,
+            }
+          );
           setOrgs(response.data.data || []);
           console.log("Ogrs loaded: ", response.data.data.length);
         } catch (error) {
