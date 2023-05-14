@@ -12,27 +12,6 @@ import "../../assets/styles/main.css";
 import "../../assets/styles/responsive.css";
 import axios from "axios";
 
-// Images
-
-import ava1 from "../../assets/images/logo-shopify.svg";
-import ava2 from "../../assets/images/logo-atlassian.svg";
-import ava3 from "../../assets/images/logo-slack.svg";
-import ava4 from "../../assets/images/logo-spotify.svg";
-import ava5 from "../../assets/images/logo-jira.svg";
-import ava6 from "../../assets/images/logo-invision.svg";
-import team1 from "../../assets/images/team-1.jpg";
-import team2 from "../../assets/images/team-2.jpg";
-import team3 from "../../assets/images/team-3.jpg";
-import team4 from "../../assets/images/team-4.jpg";
-import card from "../../assets/images/info-card-1.jpg";
-import face from "../../assets/images/face-1.jpg";
-import face2 from "../../assets/images/face-2.jpg";
-import face3 from "../../assets/images/face-3.jpg";
-import face4 from "../../assets/images/face-4.jpg";
-import face5 from "../../assets/images/face-5.jpeg";
-import face6 from "../../assets/images/face-6.jpeg";
-import pencil from "../../assets/images/pencil.svg";
-
 import {
   Card,
   Col,
@@ -58,330 +37,6 @@ import TextArea from "antd/es/input/TextArea";
 import urls from "../urls";
 
 const { Title, Text } = Typography;
-const onChange = (e) => console.log(`radio checked:${e.target.value}`);
-
-const count = [
-  {
-    className: "grantedAccess",
-    title: "Granted Access",
-    number: 32,
-  },
-  {
-    className: "accessApproved",
-    title: "Access Approved",
-    number: 26,
-  },
-  {
-    // today: "Today’s Sales",
-    // title: "$53,000",
-    // persent: "+30%",
-    // icon: dollor,
-    // bnb: "bnb2",
-    className: "pendingApproval",
-    title: "Pending Approval",
-    number: 11,
-  },
-  {
-    className: "waitingApproval",
-    title: "Waiting Approval",
-    number: 19,
-  },
-];
-const list = [
-  {
-    img: ava1,
-    Title: "Shopify",
-    bud: "$14,000",
-    progress: <Progress percent={60} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <Image className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Jessica Doe">
-          <Image className="tootip-img" src={team4} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Marketing Manager</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Access Approval</Title>
-          <Title level={5}>Vacation Approval</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>02/01/2015</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>7643f326rtdg23</Title>
-        </div>
-      </>
-    ),
-  },
-  {
-    img: ava2,
-    Title: "Jira",
-    bud: "$3,000",
-    progress: <Progress percent={10} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>App Owner</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Access Approval</Title>
-          <Title level={5}>Admin Access</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>05/11/2022</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>265fd2f8qdq</Title>
-        </div>
-      </>
-    ),
-  },
-  {
-    img: ava3,
-    Title: "Slack",
-    bud: "Not Set",
-    progress: <Progress percent={100} size="small" status="active" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <Image className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>App Manager</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Provisioning Access</Title>
-          <Title level={5}>Deprovisioning Access</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>17/05/2022</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>8a7ffsf798632</Title>
-        </div>
-      </>
-    ),
-  },
-  {
-    img: ava4,
-    Title: "OS",
-    bud: "$20,600",
-    progress: <Progress percent={100} size="small" status="active" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Marketing Manager</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Access Approval</Title>
-          <Title level={5}>Vacation Approval</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>22/05/2022</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>987df63veevz</Title>
-        </div>
-      </>
-    ),
-  },
-  {
-    img: ava5,
-    Title: "HRM",
-    bud: "$4,000",
-    progress: <Progress percent={80} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <Image className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Jessica Doe">
-          <Image className="tootip-img" src={team4} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>App Owner</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Access Approval</Title>
-          <Title level={5}>Admin Access</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>11/04/2021</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>973bqs3eeaq</Title>
-        </div>
-      </>
-    ),
-  },
-
-  {
-    img: ava6,
-    Title: "ERP",
-    bud: "$2,000",
-    progress: (
-      <Progress
-        percent={100}
-        size="small"
-        status="exception"
-        format={() => "Cancel"}
-      />
-    ),
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <Image className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <Image className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
-    roles: (
-      <>
-        <div className="author-info">
-          <Title level={5}>App Manager</Title>
-        </div>
-      </>
-    ),
-    rights: (
-      <>
-        <div className="author-info">
-          <Title level={5}>Provisioning Access</Title>
-          <Title level={5}>Deprovisioning Access</Title>
-        </div>
-      </>
-    ),
-    accessSince: (
-      <>
-        <div className="author-info">
-          <Title level={5}>11/05/2016</Title>
-        </div>
-      </>
-    ),
-    ticketNo: (
-      <>
-        <div className="author-info">
-          <Title level={5}>73294vqwedwe</Title>
-        </div>
-      </>
-    ),
-  },
-];
 
 export default function NiamAdminDash() {
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
@@ -394,22 +49,21 @@ export default function NiamAdminDash() {
     handleOrgValidify,
   } = useNiamContext();
 
+  const router = useRouter();
   const [reverse, setReverse] = useState(false);
   const [orgs, setOrgs] = useState({});
-  const router = useRouter();
+  const [selectedOrg, setSelectedOrg] = useState("");
+  const [orgInfo, setOrgInfo] = useState(null);
+
   useEffect(() => {
     if (!signedIn) {
       router.push("/NiamLogin");
     } else if (signedIn) {
       async function fetchOrgs() {
         try {
-          const response = await axios.get(
-            // "https://niambackend.cyclic.app/api/niamadmin/allorg",
-            urls.baseURL + "/niamadmin/allorg",
-            {
-              withCredentials: true,
-            }
-          );
+          const response = await axios.get(urls.baseURL + "/niamadmin/allorg", {
+            withCredentials: true,
+          });
           setOrgs(response.data.data || []);
           console.log("Ogrs loaded: ", response.data.data.length);
         } catch (error) {
@@ -420,40 +74,67 @@ export default function NiamAdminDash() {
     } else {
       console.log("What the fish!");
     }
+
+    return () => {
+      localStorage.removeItem("orgInfo");
+    };
   }, [signedIn, router]);
 
-  const [selectedOrg, setSelectedOrg] = useState("");
-  // useEffect(() => {
-  //   setSelectedOrg(value);
-  // }, [setSelectedOrg]);
-  const handleOrgChange = (value) => {
-    setSelectedOrg(value);
-  };
-
   const orgsArray = Object.values(orgs).map((org) => ({
-    label: org.orgDomain, // Replace with the desired property for the label
-    value: org._id, // Replace with the desired property for the value
+    label: org.orgDomain,
+    value: org.orgDomain,
   }));
 
-  // const [reason, setReason] = useState("");
-  // const handleReason = (value) => {
-  //   setReason(value);
-  // }
+  const handleOrgChange = (value) => {
+    setSelectedOrg(value);
+    setOrgInfo(null);
+  };
+  // useEffect(() => {
+  //   setSelectedOrg(orgsArray.length > 0 ? orgsArray[1].value : "");
+  // }, [orgsArray]);
+  useEffect(() => {
+    if (selectedOrg) {
+      const selectedOrgIndex = orgsArray.findIndex(
+        (org) => org.value === selectedOrg
+      );
+      setSelectedOrg(orgsArray[selectedOrgIndex]?.value || "");
+    }
+  }, [orgsArray, selectedOrg]);
 
-  const [orgInfo, setOrgInfo] = useState("");
-  const handleOrgSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const storedOrgInfo = localStorage.getItem("orgInfo");
+    if (storedOrgInfo) {
+      setOrgInfo(JSON.parse(storedOrgInfo));
+    }
+  }, []);
 
+  useEffect(() => {
+    if (orgInfo) {
+      localStorage.setItem("orgInfo", JSON.stringify(orgInfo));
+    }
+  }, [orgInfo]);
+
+  const onFinish = async (values) => {
     const formData = {
       orgDomain: selectedOrg,
     };
     try {
-      const response = await axios.post("/api/niamadmin/searchorg", formData);
-      console.log(response.data);
+      const response = await axios.post(
+        urls.baseURL + "/niamadmin/searchorg",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("Org info: ", response.data);
       setOrgInfo(response.data);
     } catch (error) {
       console.log(error.response.data);
     }
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onFinish(event.target.elements);
   };
 
   return (
@@ -511,7 +192,7 @@ export default function NiamAdminDash() {
         style={{
           maxWidth: "90vw",
         }}
-        onSubmit={handleOrgSubmit}
+        onFinish={onFinish}
       >
         <Form.Item label="Check Organization" className="checkOrg">
           <Select
@@ -528,24 +209,29 @@ export default function NiamAdminDash() {
           />
           {console.log("Orgs for select: ", orgs)}
         </Form.Item>
-        <Form.Item label="Reason">
-          <TextArea
-            showCount
-            maxLength={400}
-            style={{ width: 320 }}
-            onChange={(e) => {
-              e.target.value;
-            }}
-          />
-        </Form.Item>
         <br />
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
           Check Organization
         </Button>
       </Form>
-      <div className="orgDetails">
-        <p>{orgInfo}</p>
-      </div>
+      {/* <div className="orgDetails">
+        <p>Org Domain: {orgInfo?.data.orgDomain}</p>
+        <p>Org Name: {orgInfo?.data.organizationName}</p>
+        <p>Org User Tyre: {orgInfo?.data.userTyre}</p>
+      </div> */}
+      {orgInfo && orgInfo.data && orgInfo.data.length > 0 ? (
+        <div>
+          {orgInfo.data.map((org, index) => (
+            <div key={index}>
+              <p>Org Domain: {org.orgDomain}</p>
+              <p>Org Name: {org.organizationName}</p>
+              <p>Org User Tyre: {org.userTyre}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No org information available</p>
+      )}
       <div
         className="logoutButton"
         align="middle"
