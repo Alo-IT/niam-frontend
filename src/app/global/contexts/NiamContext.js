@@ -7,20 +7,9 @@ const NiamContext = createContext();
 export const NiamAuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [signedIn, setsignedIn] = useState(false);
-
   const router = useRouter();
-  useEffect(() => {
-    // const orgValidityStatus = JSON.parse(
-    //   localStorage.getItem("isAuthenticated")
-    // );
-    // if (orgValidityStatus == null || orgValidityStatus == false) {
-    //   setIsAuthenticated(false);
-    //   localStorage.setItem("isAuthenticated", false);
-    // } else {
-    //   setIsAuthenticated(true);
-    //   localStorage.setItem("isAuthenticated", true);
-    // }
 
+  useEffect(() => {
     const signedInStatus = JSON.parse(localStorage.getItem("signedIn"));
     if (signedInStatus == null || signedInStatus == false) {
       setsignedIn(false);
@@ -46,6 +35,7 @@ export const NiamAuthProvider = ({ children }) => {
     localStorage.setItem("signedIn", false);
     setIsAuthenticated(false);
     localStorage.setItem("isAuthenticated", false);
+    router.push("/NiamLogin");
   };
 
   return (

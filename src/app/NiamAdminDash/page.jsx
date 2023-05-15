@@ -136,7 +136,9 @@ export default function NiamAdminDash() {
     event.preventDefault();
     onFinish(event.target.elements);
   };
-
+  const orgAdder = () => {
+    router.push("/OrgAddForm");
+  };
   return (
     <>
       <Title>Organization Admin Dashboard</Title>
@@ -233,7 +235,7 @@ export default function NiamAdminDash() {
         <p>No org information available</p>
       )}
       <div
-        className="logoutButton"
+        className="buttons"
         align="middle"
         justify="center"
         style={{ width: "100vw" }}
@@ -254,6 +256,8 @@ export default function NiamAdminDash() {
         >
           Logout
         </Button>
+
+        <Button onClick={orgAdder}>Add Organization</Button>
       </div>
     </>
   );
