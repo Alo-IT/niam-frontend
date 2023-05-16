@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import urls from "../urls";
 import axios from "axios";
 import { useNiamContext } from "../global/contexts/NiamContext";
-import { LogoutOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, LogoutOutlined } from "@ant-design/icons";
 
 export default function OrgAddForm() {
   const {
@@ -17,36 +17,25 @@ export default function OrgAddForm() {
     handleOrgValidify,
   } = useNiamContext();
   const router = useRouter();
-  const [orgs, setOrgs] = useState({});
   const [orgInfo, setOrgInfo] = useState(null);
-  const [orgDomainf, setOrgDomainf] = useState("");
-  const [dbName, setDbName] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    async function fetchOrgs() {
-      try {
-        const response = await axios.get(urls.baseURL + "/niamadmin/allorg", {
-          withCredentials: true,
-        });
-        setOrgs(response.data.data || []);
-        console.log("Ogrs loaded: ", response.data?.data);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    }
-    fetchOrgs();
-  }, [router]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = {
-      orgDomain: event.target.elements.orgDomain.value,
-      dbName: event.target.elements.dbName.value,
-    };
-    onFinish(formData);
+  const handleAddOrg = (data) => {
+    setOrgInfo(data);
+    localStorage.setItem("orgInfo", data);
+    console.log("New Org info: ", data);
   };
 
-  const onFinish = async (formData) => {
+  const onFinish = async (values) => {
+    console.log("Sending data....");
+    if (!values.dbName || !values.orgDomain) {
+      console.log("Please provide dbName and orgDomain");
+      return;
+    }
+    const formData = {
+      orgDomain: values.orgDomain,
+      dbName: values.dbName,
+    };
     try {
       const response = await axios.post(
         urls.baseURL + "/niamadmin/organization",
@@ -56,45 +45,76 @@ export default function OrgAddForm() {
         }
       );
       if (response.data.success == true) {
-        console.log("New Org info: ", response.data);
-        setOrgInfo(response.data);
+        handleAddOrg(response.data);
+        setSuccessMessage("Organization added successfully!");
       } else {
         console.log("Org exists. Try new!");
+        setSuccessMessage(
+          "Organization already exists. Please try a different one."
+        );
       }
     } catch (error) {
       console.log(error.response.data);
+      setSuccessMessage("Failed to add organization. Please try again.");
     }
   };
 
   return (
     <>
       <Form onFinish={onFinish}>
-        <Form.Item label="Organization Domain">
-          <Input name="orgDomain" placeholder="Organization Domain" />
+        <Form.Item label="Organization Domain" name="orgDomain">
+          <Input placeholder="Organization Domain" />
         </Form.Item>
-        <Form.Item label="Oranization Name">
-          <Input name="dbName" placeholder="Oranization Name" />
+        <Form.Item label="Oranization Name" name="dbName">
+          <Input placeholder="Oranization Name" />
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Add Organization
         </Button>
       </Form>
-      <Button
-        type="primary"
-        size="large"
+      {successMessage && <div>{successMessage}</div>}
+
+      <div
+        className="actionButtons"
         style={{
-          background: "#F44336",
-          color: "white",
-          fontWeight: 500,
-          padding: "10px 30px",
-          margin: "0 0",
-          lineHeight: "1.1em",
+          marginTop: "40px",
+          display: "grid",
+          gap: "20px",
         }}
-        icon={<LogoutOutlined />}
-        onClick={handleSignout}
       >
-        Logout
-      </Button>
+        <Button
+          type="secondary"
+          icon={<ArrowLeftOutlined />}
+          style={{
+            background: "#010101",
+            color: "white",
+            fontWeight: 500,
+            padding: "10px 30px",
+            margin: "0 0",
+            lineHeight: "1.1em",
+          }}
+          onClick={() => router.push("/NiamAdminDash")}
+        >
+          Go Dashboard
+        </Button>
+
+        <Button
+          type="primary"
+          size="large"
+          style={{
+            background: "#F44336",
+            color: "white",
+            fontWeight: 500,
+            padding: "10px 30px",
+            margin: "0 0",
+            lineHeight: "1.1em",
+          }}
+          icon={<LogoutOutlined />}
+          onClick={handleSignout}
+        >
+          Logout
+        </Button>
+      </div>
     </>
   );
 }
