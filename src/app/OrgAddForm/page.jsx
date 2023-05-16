@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import urls from "../urls";
 import axios from "axios";
 import { useNiamContext } from "../global/contexts/NiamContext";
-import { ArrowLeftOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 
 export default function OrgAddForm() {
   const {
@@ -59,7 +63,7 @@ export default function OrgAddForm() {
     }
   };
 
-  return (
+  return signedIn ? (
     <>
       <Form onFinish={onFinish}>
         <Form.Item label="Organization Domain" name="orgDomain">
@@ -115,6 +119,17 @@ export default function OrgAddForm() {
           Logout
         </Button>
       </div>
+    </>
+  ) : (
+    <>
+      <h1>You are not authorized.</h1>
+      <Button
+        icon={<ArrowRightOutlined />}
+        type="primary"
+        onClick={() => router.push("/NiamLogin")}
+      >
+        Login
+      </Button>
     </>
   );
 }
