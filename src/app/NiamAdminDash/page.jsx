@@ -89,9 +89,6 @@ export default function NiamAdminDash() {
     setSelectedOrg(value);
     setOrgInfo(null);
   };
-  // useEffect(() => {
-  //   setSelectedOrg(orgsArray.length > 0 ? orgsArray[1].value : "");
-  // }, [orgsArray]);
   useEffect(() => {
     if (selectedOrg) {
       const selectedOrgIndex = orgsArray.findIndex(
@@ -258,6 +255,9 @@ export default function NiamAdminDash() {
         </Button>
 
         <Button onClick={orgAdder}>Add Organization</Button>
+        <Button onClick={() => router.push("/AddOrgAdmin")}>
+          Add Org Admin
+        </Button>
       </div>
     </>
   );
