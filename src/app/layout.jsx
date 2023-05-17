@@ -4,6 +4,7 @@ import { metadata } from "./global/constants/metadata";
 // import NavBar from "./components/NavBar";
 // import { AuthProvider } from "./global/contexts/AuthContext";
 import { NiamAuthProvider } from "./global/contexts/NiamContext";
+import { OrgAuthProvider } from "./global/contexts/OrgContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -14,7 +15,8 @@ export default function RootLayout({ children }) {
           <meta name="description" content={metadata.description} />
         </head>
         <body>
-          <NiamAuthProvider>{children}</NiamAuthProvider>
+          {/* <NiamAuthProvider>{children}</NiamAuthProvider> */}
+          <OrgAuthProvider>{children}</OrgAuthProvider>
         </body>
       </html>
     </>

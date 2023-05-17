@@ -23,7 +23,7 @@ import {
 } from "@ant-design/icons";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useNiamContext } from "../global/contexts/NiamContext";
+import { useOrgContext } from "../global/contexts/OrgContext";
 function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
@@ -113,26 +113,15 @@ const signin = [
 
 export default function OrgAdminLogin() {
   const {
-    signedIn,
-    isAuthenticated,
-    setIsAuthenticated,
-    handleSignin,
-    handleSignout,
+    boomed,
+    orgValidity,
+    setOrgValidity,
+    handleBoom,
+    handleBoomout,
     handleOrgValidify,
-  } = useNiamContext();
+  } = useOrgContext();
 
   const router = useRouter();
-  useEffect(() => {
-    if (signedIn) {
-      router.push("/NiamAdminDash");
-      console.log("Logged in, going to NiamAdminDash");
-    } else if (!signedIn) {
-      console.log("Rerouting to NiamLogin");
-      router.push("/NiamLogin");
-    } else {
-      console.log("What the fuck is going on! I don't know.");
-    }
-  }, [signedIn, router]);
   const [errorMessage, setErrorMessage] = useState("");
   const [form] = Form.useForm();
   const [formLayout, setFormLayout] = useState("vertical");
@@ -159,7 +148,7 @@ export default function OrgAdminLogin() {
     };
     try {
       const response = await axios.post(
-        urls.baseURL + "/auth/niamadminlogin",
+        urls.baseURL + "/auth/login",
         formData,
         {
           withCredentials: true,
@@ -168,18 +157,126 @@ export default function OrgAdminLogin() {
       console.log(response.data);
 
       // set loggedIn and loggedIn to true
-      handleSignin();
+      handleBoom();
 
-      router.push("/NiamAdminDash");
+      router.push("/OrgAdminDash");
     } catch (error) {
       console.log(error.response.data);
       setErrorMessage(error.response.data.message);
     }
+
+    router.push("/OrgAdminDash");
     console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  return <></>;
+  return (
+    <>
+      <Layout className="layout-default layout-signin">
+        <Content className="signin">
+          <Row gutter={[24, 0]} justify="space-around">
+            <Col
+              xs={{ span: 24, offset: 0 }}
+              lg={{ span: 8, offset: 2 }}
+              md={{ span: 12 }}
+            >
+              <Title className="mb-15">Sign In</Title>
+              <Title className="font-regular text-muted" level={5}>
+                Enter your email and password to sign in
+              </Title>
+              <Form
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                layout="vertical"
+                className="row-col"
+                size="large"
+                form={form}
+              >
+                <Form.Item
+                  className="username"
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" />
+                </Form.Item>
+
+                <Form.Item
+                  className="username"
+                  label="Password"
+                  name="password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your password!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Password" />
+                </Form.Item>
+
+                <Form.Item
+                  name="remember"
+                  className="aligin-center"
+                  valuePropName="checked"
+                >
+                  <Switch
+                    defaultChecked
+                    onChange={onChange}
+                    style={{ marginRight: "20px" }}
+                  />
+                  Remember me
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: "100%" }}
+                  >
+                    Boom In
+                  </Button>
+                </Form.Item>
+              </Form>
+              <Button
+                type="secondary"
+                htmlType="submit"
+                style={{
+                  background: "#144336",
+                  color: "white",
+                  fontWeight: 500,
+                  padding: "10px 30px",
+                  margin: "0 0",
+                  lineHeight: "1.1em",
+                }}
+                onClick={() => router.push("/OrgLogin")}
+              >
+                Go Back
+              </Button>
+            </Col>
+            <Col
+              className="sign-img"
+              style={{ padding: 12 }}
+              xs={{ span: 24 }}
+              lg={{ span: 12 }}
+              md={{ span: 12 }}
+            >
+              <Image
+                src={signinbg}
+                alt=""
+                style={{ width: "50vw", height: "auto" }}
+              />
+            </Col>
+          </Row>
+        </Content>
+      </Layout>
+    </>
+  );
 }
