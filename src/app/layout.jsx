@@ -16,7 +16,8 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           {/* <NiamAuthProvider>{children}</NiamAuthProvider> */}
-          <OrgAuthProvider>{children}</OrgAuthProvider>
+          {/* <OrgAuthProvider>{children}</OrgAuthProvider> */}
+          {children}
         </body>
       </html>
     </>

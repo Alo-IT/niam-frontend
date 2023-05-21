@@ -5,10 +5,23 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const OrgContext = createContext();
 
 export const OrgAuthProvider = ({ children }) => {
-  const [boomed, setBoomed] = useState(false);
-  const [orgValidity, setOrgValidity] = useState(false);
+  const [boomed, setBoomed] = useState();
+  const [orgValidity, setOrgValidity] = useState();
   const router = useRouter();
 
+  // Check org validity
+  useEffect(() => {
+    const orgValidityStatus = JSON.parse(localStorage.getItem("orgValidity"));
+    if (orgValidityStatus == null || orgValidityStatus == false) {
+      setOrgValidity(false);
+      localStorage.setItem("orgValidity", false);
+    } else {
+      setOrgValidity(true);
+      localStorage.setItem("orgValidity", true);
+    }
+  }, [setOrgValidity]);
+
+  // Check boomed status
   useEffect(() => {
     const boomedStatus = JSON.parse(localStorage.getItem("boomed"));
     if (boomedStatus == null || boomedStatus == false) {
@@ -23,12 +36,13 @@ export const OrgAuthProvider = ({ children }) => {
   const handleOrgValidify = () => {
     setOrgValidity(true);
     localStorage.setItem("orgValidity", true);
-    router.push("/OrgAdminLogin");
+    // router.push("/OrgAdminLogin");
   };
 
   const handleBoom = () => {
     setBoomed(true);
     localStorage.setItem("boomed", true);
+    router.push("/OrgAdminDash");
   };
 
   const handleBoomout = () => {
@@ -43,6 +57,7 @@ export const OrgAuthProvider = ({ children }) => {
     <OrgContext.Provider
       value={{
         boomed,
+        setBoomed,
         orgValidity,
         setOrgValidity,
         handleBoom,
@@ -51,6 +66,8 @@ export const OrgAuthProvider = ({ children }) => {
       }}
     >
       {children}
+      {console.log("Context Status (Boomed): ", boomed)}
+      {console.log("Context Status (Org validity): ", orgValidity)}
     </OrgContext.Provider>
   );
 };
