@@ -35,21 +35,7 @@ export default function Component() {
     handleOrgValidify,
   } = useOrgContext();
   const router = useRouter();
-  const [isBoomed, setIsBoomed] = useState();
-
-  //   useEffect(() => {
-  //     if (!boomed && !orgValidity) {
-  //       console.log("Please validate your domain.");
-  //     } else if (orgValidity && !boomed) {
-  //       console.log("Going Org Admin Signin");
-  //       router.push("/OrgAdminLogin");
-  //     } else if (orgValidity && boomed) {
-  //       console.log("Welcome to Admin Dashboard");
-  //         router.push("/OrgAdminDash");
-  //     } else {
-  //       console.log("What the hell!");
-  //     }
-  //   }, [setOrgValidity, setBoomed, router]);
+  const [orgs, setOrgs] = useState({});
 
   useEffect(() => {
     if (!boomed && !orgValidity) {
@@ -59,17 +45,51 @@ export default function Component() {
       router.push("/OrgAdminLogin");
     } else if (orgValidity && boomed) {
       console.log("Welcome to Admin Dashboard");
-      router.push("/OrgAdminDash");
+      // router.push("/OrgAdminDash");
     } else {
       console.log("What the hell!");
     }
   }, [orgValidity, boomed, router]);
+
+  useEffect(() => {
+    async function fetchOrgs() {
+      try {
+        const response = await axios.get(
+          urls.baseURL + "/organization/organization",
+          {
+            withCredentials: true,
+          }
+        );
+        setOrgs(response.data.data || []);
+        console.log("Ogrs loaded: ", response.data.data);
+        console.log("Ogr name: ", orgs[0].organizationName);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
+    fetchOrgs();
+  }, [boomed, router]);
 
   const [errorMessage, setErrorMessage] = useState("");
 
   return boomed ? (
     <>
       <Title>Org Admin Dashboard</Title>
+
+      <Title level={4}>Please complete the org info</Title>
+      <Form>
+        <Form.Item label="Organization Name">
+          {orgs[0].organizationName}
+        </Form.Item>
+        <Form.Item label="Organization Name">{orgs[0].orgDomain}</Form.Item>
+        <Form.Item label="Organization Name">{orgs[0].userTyre}</Form.Item>
+        <Form.Item label="Organization Name">
+          {orgs[0].oAuth} <Button>Add oAuth</Button>
+        </Form.Item>
+        <Form.Item label="Organization Name">
+          {orgs[0].thirdPartyOrg} <Button>Add thirdPartyOrg</Button>
+        </Form.Item>
+      </Form>
       <Button type="primary" onClick={() => router.push("/OrgAdminLogin")}>
         Go Back
       </Button>
