@@ -36,47 +36,15 @@ export default function Component() {
   } = useOrgContext();
   const router = useRouter();
   const [orgs, setOrgs] = useState({});
-  const [orgInfo, setOrgInfo] = useState("");
 
   useEffect(() => {
     if (!orgValidity) {
       console.log("Please validate yourself");
-      // router.push("/OrgLogin");
     } else if (!boomed) {
       console.log("Please validate yourself");
-      // router.push("/OrgAdminLogin");
     }
-    //  else if (boomed && orgValidity) {
-    //   router.push("/OrgAdminLogin");
-    // }
   }, [orgValidity, boomed, router]);
 
-  useEffect(() => {
-    localStorage.setItem("orgInfo", orgs.data);
-    console.log("Ogr name 2: ", orgInfo);
-  }, [orgs]);
-
-  // useEffect(() => {
-  //   async function fetchOrgs() {
-  //     try {
-  //       const response = await axios.get(
-  //         urls.baseURL + "/organization/organization",
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       setOrgs(response.data.data || []);
-  //       // setOrgInfo(response.data.data);
-  //       localStorage.setItem("orgInfo", response.data.data);
-
-  //       console.log("Ogrs loaded: ", response.data.data);
-  //       console.log("Ogr name 1: ", orgInfo);
-  //     } catch (error) {
-  //       console.log(error.response.data);
-  //     }
-  //   }
-  //   fetchOrgs();
-  // }, [boomed, orgValidity]);
   useEffect(() => {
     async function fetchOrgs() {
       try {
@@ -88,23 +56,13 @@ export default function Component() {
         );
         setOrgs(response.data.data || []);
 
-        // Update orgInfo in localStorage
-        localStorage.setItem("orgInfo", JSON.stringify(response.data.data));
-
+        localStorage.setItem("orgs", JSON.stringify(response.data.data || []));
         console.log("Orgs loaded: ", response.data.data);
-        console.log("Org name 1: ", orgInfo);
       } catch (error) {
         console.log(error.response.data);
       }
     }
-
-    // Fetch orgInfo from localStorage on page refresh
-    const storedOrgInfo = JSON.parse(localStorage.getItem("orgInfo.data.data"));
-    if (storedOrgInfo) {
-      setOrgs(storedOrgInfo);
-    } else {
-      fetchOrgs();
-    }
+    fetchOrgs();
   }, [boomed, orgValidity]);
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -116,15 +74,14 @@ export default function Component() {
       <Title level={4}>Please complete the org info</Title>
       <Form>
         <Form.Item label="Organization Name">
-          {/* {orgs[0].organizationName} */}
+          {orgs[0]?.organizationName}
         </Form.Item>
-        {/* <Form.Item label="Organization Name">{orgs[0].orgDomain}</Form.Item> */}
-        {/* <Form.Item label="Organization Name">{orgs[0].userTyre}</Form.Item> */}
-        <Form.Item label="Organization Name">
-          {/* {orgs[0].oAuth} <Button>Add oAuth</Button> */}
-        </Form.Item>
-        <Form.Item label="Organization Name">
-          {/* {orgs[0].thirdPartyOrg} <Button>Add thirdPartyOrg</Button> */}
+        <Form.Item label="Organization Domain">{orgs[0]?.orgDomain}</Form.Item>
+        <Form.Item label="Organization userTyre">{orgs[0]?.userTyre}</Form.Item>
+        <Form.Item label="Organization Admins">
+          {orgs[0]?.org_admin?.map((admin) => (
+            <div key={admin.id}>{admin.name}</div>
+          ))}
         </Form.Item>
       </Form>
       <Button type="primary" onClick={() => router.push("/OrgAdminLogin")}>
