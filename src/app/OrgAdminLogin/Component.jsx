@@ -128,10 +128,12 @@ export default function Component() {
     if (!orgValidity && !boomed) {
       console.log("Rerouting to Org validity page");
       router.push("/OrgLogin");
-    } else if (!boomed) {
-      console.log("Rerouting to OrgAdminLogin");
-      router.push("/OrgAdminLogin");
-    } else if (boomed) {
+    }
+    // else if (!boomed) {
+    //   console.log("Rerouting to OrgAdminLogin");
+    //   router.push("/OrgAdminLogin");
+    // }
+    else if (boomed) {
       console.log("Logged in, going to OrgAdminDash");
       router.push("/OrgAdminDash");
     } else {

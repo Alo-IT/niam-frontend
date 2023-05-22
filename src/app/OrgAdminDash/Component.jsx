@@ -38,12 +38,9 @@ export default function Component() {
   const [orgs, setOrgs] = useState({});
 
   useEffect(() => {
-    if (!boomed && !orgValidity) {
+    if ((!boomed && !orgValidity) || (orgValidity && !boomed)) {
       console.log("Please validate your domain.");
       router.push("/OrgLogin");
-    } else if (orgValidity && !boomed) {
-      console.log("Going Org Admin Signin");
-      router.push("/OrgAdminLogin");
     } else if (orgValidity && boomed) {
       console.log("Welcome to Admin Dashboard");
       // router.push("/OrgAdminDash");

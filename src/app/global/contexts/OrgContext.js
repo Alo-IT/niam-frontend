@@ -15,9 +15,11 @@ export const OrgAuthProvider = ({ children }) => {
     if (orgValidityStatus == null || orgValidityStatus == false) {
       setOrgValidity(false);
       localStorage.setItem("orgValidity", false);
-    } else {
+    } else if (orgValidityStatus == true) {
       setOrgValidity(true);
       localStorage.setItem("orgValidity", true);
+    } else {
+      console.log("Status (Org): ", orgValidity);
     }
   }, [setOrgValidity]);
 
@@ -27,9 +29,11 @@ export const OrgAuthProvider = ({ children }) => {
     if (boomedStatus == null || boomedStatus == false) {
       setBoomed(false);
       localStorage.setItem("boomed", false);
-    } else {
+    } else if (boomedStatus == true) {
       setBoomed(true);
       localStorage.setItem("boomed", true);
+    } else {
+      console.log("Status (Boom): ", boomed);
     }
   }, [setBoomed]);
 
