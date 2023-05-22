@@ -1,5 +1,4 @@
 "use client";
-import NiamLogin from "./NiamLogin/page";
 import OrgLogin from "./OrgLogin/page";
 
 export default function page() {
