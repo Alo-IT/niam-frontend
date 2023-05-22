@@ -124,20 +124,6 @@ export default function Component() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (boomed) {
-  //     console.log("Logged in, going to OrgAdminDash");
-  //     router.push("/OrgAdminDash");
-  //   } else if (!boomed) {
-  //     console.log("Rerouting to OrgAdminLogin");
-  //     router.push("/OrgAdminLogin");
-  //   } else if (!boomed && !orgValidity) {
-  //     console.log("Rerouting to Org validity page");
-  //     router.push("/OrgLogin");
-  //   } else {
-  //     console.log("What the fuck is going on! I don't know.");
-  //   }
-  // }, [setOrgValidity, setBoomed, router]);
   useEffect(() => {
     if (!orgValidity && !boomed) {
       console.log("Rerouting to Org validity page");

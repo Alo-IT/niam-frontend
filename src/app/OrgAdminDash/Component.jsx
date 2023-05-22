@@ -40,6 +40,7 @@ export default function Component() {
   useEffect(() => {
     if (!boomed && !orgValidity) {
       console.log("Please validate your domain.");
+      router.push("/OrgLogin");
     } else if (orgValidity && !boomed) {
       console.log("Going Org Admin Signin");
       router.push("/OrgAdminLogin");

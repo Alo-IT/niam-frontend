@@ -128,7 +128,7 @@ export default function Component() {
       console.log("Logged in, going to NiamAdminDash");
     } else if (!signedIn) {
       console.log("Rerouting to NiamLogin");
-      router.push("/NiamLogin");
+      // router.push("/NiamLogin");
     } else {
       console.log("What the fuck is going on! I don't know.");
     }

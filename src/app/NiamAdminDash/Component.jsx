@@ -56,9 +56,7 @@ export default function Component() {
   const [orgInfo, setOrgInfo] = useState(null);
 
   useEffect(() => {
-    if (!signedIn) {
-      router.push("/NiamLogin");
-    } else if (signedIn) {
+    if (signedIn) {
       async function fetchOrgs() {
         try {
           const response = await axios.get(urls.baseURL + "/niamadmin/allorg", {
@@ -71,6 +69,9 @@ export default function Component() {
         }
       }
       fetchOrgs();
+    } else if (!signedIn) {
+      // router.push("/NiamLogin");
+      console.log("Signin status (Admin Dash): ", signedIn);
     } else {
       console.log("What the fish!");
     }
