@@ -80,7 +80,7 @@ export default function Component() {
         <Form.Item label="Organization userTyre">{orgs[0]?.userTyre}</Form.Item>
         <Form.Item label="Organization Admins">
           {orgs[0]?.org_admin?.map((admin) => (
-            <div key={admin.id}>{admin.name}</div>
+            <div key={admin.id}>{admin._id}</div>
           ))}
         </Form.Item>
       </Form>
