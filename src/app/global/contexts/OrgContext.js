@@ -5,48 +5,48 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 const OrgContext = createContext();
 
 export const OrgAuthProvider = ({ children }) => {
-  const [boomed, setBoomed] = useState();
-  const [orgValidity, setOrgValidity] = useState();
+  const [boomed, setBoomed] = useState(false);
+  const [orgValidity, setOrgValidity] = useState(false);
   const router = useRouter();
 
-  // Check org validity
   useEffect(() => {
-    const orgValidityStatus = JSON.parse(localStorage.getItem("orgValidity"));
-    if (orgValidityStatus == null || orgValidityStatus == false) {
-      setOrgValidity(false);
-      localStorage.setItem("orgValidity", false);
-    } else if (orgValidityStatus == true) {
-      setOrgValidity(true);
-      localStorage.setItem("orgValidity", true);
-    } else {
-      console.log("Status (Org): ", orgValidity);
-    }
-  }, [setOrgValidity]);
+    if (typeof window !== "undefined") {
+      // Access localStorage only on the client-side
+      const orgValidityStatus = JSON.parse(localStorage.getItem("orgValidity"));
+      const boomedStatus = JSON.parse(localStorage.getItem("boomed"));
 
-  // Check boomed status
-  useEffect(() => {
-    const boomedStatus = JSON.parse(localStorage.getItem("boomed"));
-    if (boomedStatus == null || boomedStatus == false) {
-      setBoomed(false);
-      localStorage.setItem("boomed", false);
-    } else if (boomedStatus == true) {
-      setBoomed(true);
-      localStorage.setItem("boomed", true);
-    } else {
-      console.log("Status (Boom): ", boomed);
+      if (orgValidityStatus === null || orgValidityStatus === false) {
+        localStorage.setItem("orgValidity", false);
+        setOrgValidity(false);
+      } else if (orgValidityStatus === true) {
+        // setOrgValidity(true);
+        localStorage.setItem("orgValidity", true);
+        handleOrgValidify();
+      } else {
+        console.log("Status (Org): ", orgValidity);
+      }
+
+      if (boomedStatus === null || boomedStatus === false) {
+        localStorage.setItem("boomed", false);
+        setBoomed(false);
+      } else if (boomedStatus === true) {
+        localStorage.setItem("boomed", true);
+        // setBoomed(true);
+        handleBoom();
+      } else {
+        console.log("Status (Boom): ", boomed);
+      }
     }
-  }, [setBoomed]);
+  }, []);
 
   const handleOrgValidify = () => {
     setOrgValidity(true);
     localStorage.setItem("orgValidity", true);
-    // router.push("/OrgAdminLogin");
   };
 
   const handleBoom = () => {
     setBoomed(true);
     localStorage.setItem("boomed", true);
-    router.push("/OrgAdminDash");
   };
 
   const handleBoomout = () => {

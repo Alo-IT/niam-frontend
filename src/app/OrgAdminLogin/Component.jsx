@@ -124,22 +124,19 @@ export default function Component() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!orgValidity && !boomed) {
-      console.log("Rerouting to Org validity page");
-      router.push("/OrgLogin");
-    }
-    // else if (!boomed) {
-    //   console.log("Rerouting to OrgAdminLogin");
-    //   router.push("/OrgAdminLogin");
-    // }
-    else if (boomed) {
-      console.log("Logged in, going to OrgAdminDash");
-      router.push("/OrgAdminDash");
-    } else {
-      console.log("What the fuck is going on! I don't know.");
-    }
-  }, [orgValidity, boomed, router]);
+  // useEffect(() => {
+  //   if (!orgValidity) {
+  //     console.log("Please validate your domain");
+  //     router.push("./OrgLogin");
+  //   } else if (orgValidity) {
+  //     if (!boomed) {
+  //       console.log("Org valid, Please login");
+  //     } else if (boomed) {
+  //       console.log("Org valid and Loggedin");
+  //       router.push("./OrgAdminDash");
+  //     }
+  //   }
+  // }, [boomed, orgValidity, router]);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [form] = Form.useForm();
@@ -187,6 +184,15 @@ export default function Component() {
     // router.push("/OrgAdminDash");
     console.log("Success:", values);
   };
+
+  useEffect(() => {
+    if (!orgValidity) {
+      // router.push("/OrgLogin");
+      console.log("Please validate yourself");
+    } else if (boomed) {
+      router.push("/OrgAdminDash");
+    }
+  }, [boomed, router]);
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -275,7 +281,7 @@ export default function Component() {
                   margin: "0 0",
                   lineHeight: "1.1em",
                 }}
-                onClick={() => router.push("/OrgAdminLogin")}
+                onClick={() => router.push("/OrgLogin")}
               >
                 Go Back
               </Button>
@@ -297,5 +303,21 @@ export default function Component() {
         </Content>
       </Layout>
     </>
-  ) : null;
+  ) : (
+    <Button
+      type="secondary"
+      htmlType="submit"
+      style={{
+        background: "#144336",
+        color: "white",
+        fontWeight: 500,
+        padding: "10px 30px",
+        margin: "0 0",
+        lineHeight: "1.1em",
+      }}
+      onClick={() => router.push("/OrgLogin")}
+    >
+      Validate Domain
+    </Button>
+  );
 }

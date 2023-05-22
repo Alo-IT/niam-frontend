@@ -15,36 +15,33 @@ import {
 } from "antd";
 import urls from "../urls";
 import axios from "axios";
+
 const { Title } = Typography;
 
-export default function Component() {
-  const {
-    boomed,
-    setBoomed,
-    orgValidity,
-    setOrgValidity,
-    handleBoom,
-    handleBoomout,
-    handleOrgValidify,
-  } = useOrgContext();
+export default function OrgLogin() {
+  const { boomed, orgValidity, handleOrgValidify } = useOrgContext();
+
   const router = useRouter();
-  const [selectedOrg, setSelectedOrg] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  // useEffect(() => {
+  //   if (!orgValidity) {
+  //     console.log("Please validate your domain");
+  //   } else {
+  //     if (!boomed) {
+  //       console.log("Org valid, Please login");
+  //       router.push("/OrgAdminLogin");
+  //     } else {
+  //       console.log("Org valid and Loggedin");
+  //       router.push("/OrgAdminDash");
+  //     }
+  //   }
+  // }, [boomed, orgValidity, router]);
   useEffect(() => {
-    if (!boomed && !orgValidity) {
-      console.log("Please validate your domain.");
-      // router.push("/OrgLogin");
-    } else if (orgValidity && !boomed) {
-      console.log("Going Org Admin Signin");
+    if (orgValidity) {
       router.push("/OrgAdminLogin");
-    } else if (orgValidity && boomed) {
-      console.log("Going Org Admin Dashboard");
-      router.push("/OrgAdminDash");
-    } else {
-      console.log("What the hell!");
     }
-  }, [setOrgValidity, setBoomed, router]);
+  }, [orgValidity, router]);
 
   const onFinish = async (values) => {
     console.log("Sending data....");
