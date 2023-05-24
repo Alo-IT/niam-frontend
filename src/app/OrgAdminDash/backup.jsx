@@ -24,7 +24,7 @@ import { useOrgContext } from "../global/contexts/OrgContext";
 const { Title } = Typography;
 import urls from "../urls";
 
-export default function Component() {
+export default function backup() {
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const router = useRouter();
   const [orgs, setOrgs] = useState({});
@@ -87,17 +87,6 @@ export default function Component() {
       >
         Add Employee
       </Button>
-      <Button
-        type="primary"
-        style={{
-          background: "green",
-          marginLeft: "20px",
-        }}
-        onClick={() => router.push("/UpdateOrg")}
-      >
-        Update Org
-      </Button>
-
       <Button
         type="primary"
         style={{

@@ -62,7 +62,19 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider
+              trigger={null}
+              collapsible
+              collapsed={collapsed}
+              style={{
+                height: "95vh",
+                margin: 0,
+                borderRadius: 10,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <div className="demo-logo-vertical" />
               <Menu
                 theme="dark"
@@ -74,9 +86,12 @@ export default function RootLayout({ children }) {
                   key="niam-admin"
                   icon={<UserOutlined />}
                   title="Niam Admin"
+                  style={{
+                    marginTop: "70%",
+                  }}
                 >
                   <Menu.Item key="1" onClick={() => router.push("/NiamLogin")}>
-                    Niam Login
+                    Login
                   </Menu.Item>
                   <Menu.Item key="2" onClick={() => router.push("/OrgAddForm")}>
                     Add Organization
@@ -85,7 +100,7 @@ export default function RootLayout({ children }) {
                     key="3"
                     onClick={() => router.push("/NiamAdminDash")}
                   >
-                    Niam Dashboard
+                    Dashboard
                   </Menu.Item>
                 </SubMenu>
                 <SubMenu
@@ -94,19 +109,19 @@ export default function RootLayout({ children }) {
                   title="Org Admin"
                 >
                   <Menu.Item key="4" onClick={() => router.push("/OrgLogin")}>
-                    Org Validation
+                    Validation
                   </Menu.Item>
                   <Menu.Item
                     key="5"
                     onClick={() => router.push("/OrgAdminLogin")}
                   >
-                    Org Admin Login
+                    Admin Login
                   </Menu.Item>
                   <Menu.Item
                     key="6"
                     onClick={() => router.push("/OrgAdminDash")}
                   >
-                    Org Admin Dashboard
+                    Admin Dashboard
                   </Menu.Item>
                   <Menu.Item
                     key="7"
@@ -142,8 +157,9 @@ export default function RootLayout({ children }) {
                 style={{
                   margin: "24px 16px",
                   padding: 24,
-                  minHeight: 800,
+                  // minHeight: "95vh",
                   background: colorBgContainer,
+                  borderRadius: "20px",
                 }}
               >
                 {children}
