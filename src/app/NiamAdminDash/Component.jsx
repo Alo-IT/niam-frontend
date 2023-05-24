@@ -118,7 +118,7 @@ export default function Component() {
     };
     try {
       const response = await axios.post(
-        urls.baseURL + "/niamadmin/searchorg",
+        urls.baseURL + "/niamadmin/orginfo",
         formData,
         {
           withCredentials: true,
@@ -169,7 +169,7 @@ export default function Component() {
                         level={5}
                         style={{ marginBottom: "24px", fontSize: "3em" }}
                       >
-                        {console.log("Number of orgs: ", orgs.length)}
+                        {/* {console.log("Number of orgs: ", orgs.length)} */}
                         {orgs.length}
                       </Title>
                       <span>Number of Orgs</span>
@@ -207,31 +207,28 @@ export default function Component() {
             onChange={handleOrgChange}
             options={orgsArray}
           />
-          {console.log("Orgs for select: ", orgs)}
+          {/* {console.log("Orgs for select: ", orgs)} */}
         </Form.Item>
         <br />
         <Button type="primary" htmlType="submit" onClick={handleSubmit}>
           Check Organization
         </Button>
       </Form>
-      {/* <div className="orgDetails">
-        <p>Org Domain: {orgInfo?.data.orgDomain}</p>
-        <p>Org Name: {orgInfo?.data.organizationName}</p>
-        <p>Org User Tyre: {orgInfo?.data.userTyre}</p>
-      </div> */}
-      {orgInfo && orgInfo.data && orgInfo.data.length > 0 ? (
-        <div>
-          {orgInfo.data.map((org, index) => (
-            <div key={index}>
-              <p>Org Domain: {org.orgDomain}</p>
-              <p>Org Name: {org.organizationName}</p>
-              <p>Org User Tyre: {org.userTyre}</p>
+
+      {orgInfo?.data?.orgInfo.map((item, index) => (
+        <div key={index}>
+          <h1>Org Domain: {item.orgDomain}</h1>
+          <h1>Org Name: {item.organizationName}</h1>
+          <h1>Org User Tyre: {item.userTyre}</h1>
+          <h1>Org Admin: </h1>
+          {item.org_admin.map((admin, adminIndex) => (
+            <div key={adminIndex}>
+              <p>{admin}</p>
             </div>
           ))}
         </div>
-      ) : (
-        <p>No org information available</p>
-      )}
+      ))}
+
       <div
         className="buttons"
         align="middle"

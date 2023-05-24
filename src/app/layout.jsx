@@ -1,6 +1,5 @@
 "use client";
 import { metadata } from "./global/constants/metadata";
-import { useSelector } from "react-redux";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -44,19 +43,16 @@ export default function RootLayout({ children }) {
       return "5";
     } else if (typeof path === "string" && path.startsWith("/OrgAdminDash")) {
       return "6";
+    } else if (typeof path === "string" && path.startsWith("/AddEmployee")) {
+      return "7";
     }
 
     return "";
   };
 
-  // useEffect(() => {
-  //   setSelectedMenuItem(getSelectedMenuItem(router.pathname));
-  // }, [router]);
-  // const currentRoute = useSelector((state) => state.router.route);
-
-  // useEffect(() => {
-  //   setSelectedMenuItem(getSelectedMenuItem(currentRoute.pathname));
-  // }, [currentRoute.pathname]);
+  useEffect(() => {
+    setSelectedMenuItem(getSelectedMenuItem(router.pathname));
+  }, [router]);
   return (
     <>
       <html lang="en">
@@ -111,6 +107,12 @@ export default function RootLayout({ children }) {
                     onClick={() => router.push("/OrgAdminDash")}
                   >
                     Org Admin Dashboard
+                  </Menu.Item>
+                  <Menu.Item
+                    key="7"
+                    onClick={() => router.push("/AddEmployee")}
+                  >
+                    Add Employee
                   </Menu.Item>
                 </SubMenu>
               </Menu>

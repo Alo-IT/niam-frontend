@@ -25,15 +25,7 @@ const { Title } = Typography;
 import urls from "../urls";
 
 export default function Component() {
-  const {
-    boomed,
-    setBoomed,
-    orgValidity,
-    setOrgValidity,
-    handleBoom,
-    handleBoomout,
-    handleOrgValidify,
-  } = useOrgContext();
+  const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const router = useRouter();
   const [orgs, setOrgs] = useState({});
 
@@ -80,11 +72,30 @@ export default function Component() {
         <Form.Item label="Organization userTyre">{orgs[0]?.userTyre}</Form.Item>
         <Form.Item label="Organization Admins">
           {orgs[0]?.org_admin?.map((admin) => (
-            <div key={admin.id}>{admin._id}</div>
+            <div key={admin.id}>{admin.email}</div>
           ))}
         </Form.Item>
       </Form>
-      <Button type="primary" onClick={() => router.push("/OrgAdminLogin")}>
+
+      {/* Buttons */}
+      <Button
+        type="primary"
+        style={{
+          background: "orange",
+        }}
+        onClick={() => router.push("/AddEmployee")}
+      >
+        Add Employee
+      </Button>
+      <Button
+        type="primary"
+        style={{
+          position: "fixed",
+          top: "25px",
+          right: "220px",
+        }}
+        onClick={() => router.push("/OrgAdminLogin")}
+      >
         Go Back
       </Button>
       <Button
@@ -97,13 +108,15 @@ export default function Component() {
           padding: "10px 30px",
           margin: "0 0",
           lineHeight: "1.1em",
+          position: "fixed",
+          top: "20px",
+          right: "40px",
         }}
         icon={<LogoutOutlined />}
         onClick={handleBoomout}
       >
-        Boom Out
+        Log Out
       </Button>
-      {/* {console.log("Ogr name: ", orgInfo[0].organizationName)} */}
     </>
   ) : (
     <Button
