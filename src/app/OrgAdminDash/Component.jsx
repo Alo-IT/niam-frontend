@@ -17,17 +17,28 @@ import {
   Avatar,
   Table,
   Select,
+  Tag,
+  Tabs,
 } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useOrgContext } from "../global/contexts/OrgContext";
 const { Title } = Typography;
+const { TabPane } = Tabs;
 import urls from "../urls";
+import AppList from "./AppList";
+import OrgAdminList from "./OrgAdminList";
+import Employees from "./Employees";
 
 export default function Component() {
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const router = useRouter();
   const [orgs, setOrgs] = useState({});
+  const [activeTab, setActiveTab] = useState("create");
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
 
   useEffect(() => {
     if (!orgValidity) {
@@ -61,42 +72,86 @@ export default function Component() {
 
   return boomed ? (
     <>
-      <Title>Org Admin Dashboard</Title>
+      <Title>{orgs[0]?.organizationName} Admin Dashboard</Title>
+      <Form
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Form.Item label="Subscription Type">
+            <Tag
+              color="geekblue"
+              style={{
+                fontSize: "1em",
+                padding: "5px 20px",
+              }}
+            >
+              <Title
+                level={3}
+                style={{
+                  color: "green",
+                  fontSize: "1em",
+                  lineHeight: "0.7em",
+                  fontWeight: 600,
+                }}
+              >
+                {orgs[0]?.userTyre < 50000 ? "Premium" : "Free"}
+              </Title>
+            </Tag>
+          </Form.Item>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}
+        >
+          <Button
+            type="primary"
+            style={{
+              background: "orange",
+            }}
+            onClick={() => router.push("/AddEmployee")}
+          >
+            Add Employee
+          </Button>
 
-      <Title level={4}>Please complete the org info</Title>
-      <Form>
-        <Form.Item label="Organization Name">
-          {orgs[0]?.organizationName}
-        </Form.Item>
-        <Form.Item label="Organization Domain">{orgs[0]?.orgDomain}</Form.Item>
-        <Form.Item label="Organization userTyre">{orgs[0]?.userTyre}</Form.Item>
-        <Form.Item label="Organization Admins">
-          {orgs[0]?.org_admin?.map((admin) => (
-            <div key={admin.id}>{admin.email}</div>
-          ))}
-        </Form.Item>
+          <Button
+            type="primary"
+            style={{
+              background: "green",
+              marginLeft: "20px",
+            }}
+            onClick={() => router.push("/AddApp")}
+          >
+            Add App
+          </Button>
+        </div>
       </Form>
 
+      {/* Tabs */}
+      <Tabs activeKey={activeTab} onChange={handleTabChange}>
+        <TabPane tab="App List" key="applist">
+          <AppList />
+        </TabPane>
+        <TabPane tab="Org Admin List" key="orgadmins">
+          <OrgAdminList />
+        </TabPane>
+        <TabPane tab="Employee List" key="employees">
+          <Employees />
+        </TabPane>
+      </Tabs>
+
       {/* Buttons */}
-      <Button
-        type="primary"
-        style={{
-          background: "orange",
-        }}
-        onClick={() => router.push("/AddEmployee")}
-      >
-        Add Employee
-      </Button>
-      <Button
-        type="primary"
-        style={{
-          background: "green",
-          marginLeft: "20px",
-        }}
-        onClick={() => router.push("/UpdateOrg")}
-      >
-        Update Org
-      </Button>
 
       <Button
         type="primary"

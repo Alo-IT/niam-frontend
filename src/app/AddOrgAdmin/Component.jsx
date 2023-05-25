@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import urls from "../urls";
+import Title from "antd/es/typography/Title";
 
 const { Option } = Select;
 
@@ -169,7 +170,13 @@ export default function Component() {
           Add Organization Admin
         </Button>
       </Form>
-      {successMessage && <div>{successMessage}</div>}
+      {successMessage && (
+        <div>
+          <Title level={4} style={{ color: "green" }}>
+            {successMessage}
+          </Title>
+        </div>
+      )}
 
       <Button onClick={() => router.push("/NiamAdminDash")}>Go Dash</Button>
       <Button

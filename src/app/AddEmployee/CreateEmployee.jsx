@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useOrgContext } from "../global/contexts/OrgContext";
+import Title from "antd/es/typography/Title";
 
 export default function CreateEmployee() {
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
@@ -151,7 +152,13 @@ export default function CreateEmployee() {
         </Button>
       </Form>
 
-      {successMessage && <div>{successMessage}</div>}
+      {successMessage && (
+        <div>
+          <Title level={4} style={{ color: "green" }}>
+            {successMessage}
+          </Title>
+        </div>
+      )}
       <Button
         type="primary"
         style={{

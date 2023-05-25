@@ -10,6 +10,7 @@ import {
   ArrowRightOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import Title from "antd/es/typography/Title";
 
 export default function Component() {
   const {
@@ -76,7 +77,13 @@ export default function Component() {
           Add Organization
         </Button>
       </Form>
-      {successMessage && <div>{successMessage}</div>}
+      {successMessage && (
+        <div>
+          <Title level={4} style={{ color: "green" }}>
+            {successMessage}
+          </Title>
+        </div>
+      )}
 
       <div
         className="actionButtons"

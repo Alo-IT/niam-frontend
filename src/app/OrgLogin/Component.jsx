@@ -85,7 +85,7 @@ export default function OrgLogin() {
       </Form>
       {successMessage && (
         <div>
-          <Title level={4} style={{ color: "red" }}>
+          <Title level={4} style={{ color: "green" }}>
             {successMessage}
           </Title>
         </div>
