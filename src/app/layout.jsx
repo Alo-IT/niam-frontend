@@ -45,6 +45,14 @@ export default function RootLayout({ children }) {
       return "6";
     } else if (typeof path === "string" && path.startsWith("/AddEmployee")) {
       return "7";
+    } else if (typeof path === "string" && path.startsWith("/OpsManLogin")) {
+      return "8";
+    } else if (typeof path === "string" && path.startsWith("/OpsManDash")) {
+      return "9";
+    } else if (typeof path === "string" && path.startsWith("/AddSystem")) {
+      return "10";
+    } else if (typeof path === "string" && path.startsWith("/AddSysAdmin")) {
+      return "11";
     }
 
     return "";
@@ -82,6 +90,7 @@ export default function RootLayout({ children }) {
                 defaultSelectedKeys={[selectedMenuItem]}
                 onClick={handleMenuClick}
               >
+                {/* Niam Admin */}
                 <SubMenu
                   key="niam-admin"
                   icon={<UserOutlined />}
@@ -103,10 +112,15 @@ export default function RootLayout({ children }) {
                     Dashboard
                   </Menu.Item>
                 </SubMenu>
+
+                {/* Org Admin */}
                 <SubMenu
                   key="org-admin"
                   icon={<UserOutlined />}
                   title="Org Admin"
+                  style={{
+                    marginTop: "20%",
+                  }}
                 >
                   <Menu.Item key="4" onClick={() => router.push("/OrgLogin")}>
                     Validation
@@ -128,6 +142,35 @@ export default function RootLayout({ children }) {
                     onClick={() => router.push("/AddEmployee")}
                   >
                     Add Employee
+                  </Menu.Item>
+                </SubMenu>
+
+                {/* Ops Manager */}
+                <SubMenu
+                  key="ops-manager"
+                  icon={<UserOutlined />}
+                  title="Ops Manager"
+                  style={{
+                    marginTop: "20%",
+                  }}
+                >
+                  <Menu.Item
+                    key="8"
+                    onClick={() => router.push("/OpsManLogin")}
+                  >
+                    Login
+                  </Menu.Item>
+                  <Menu.Item key="9" onClick={() => router.push("/OpsManDash")}>
+                    Dashboard
+                  </Menu.Item>
+                  <Menu.Item key="10" onClick={() => router.push("/AddSystem")}>
+                    Add System
+                  </Menu.Item>
+                  <Menu.Item
+                    key="11"
+                    onClick={() => router.push("/AddSysAdmin")}
+                  >
+                    Add Sys Admin
                   </Menu.Item>
                 </SubMenu>
               </Menu>

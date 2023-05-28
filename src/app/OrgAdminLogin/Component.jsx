@@ -124,20 +124,6 @@ export default function Component() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!orgValidity) {
-  //     console.log("Please validate your domain");
-  //     router.push("./OrgLogin");
-  //   } else if (orgValidity) {
-  //     if (!boomed) {
-  //       console.log("Org valid, Please login");
-  //     } else if (boomed) {
-  //       console.log("Org valid and Loggedin");
-  //       router.push("./OrgAdminDash");
-  //     }
-  //   }
-  // }, [boomed, orgValidity, router]);
-
   const [errorMessage, setErrorMessage] = useState("");
   const [form] = Form.useForm();
   const [formLayout, setFormLayout] = useState("vertical");

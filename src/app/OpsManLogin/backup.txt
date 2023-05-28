@@ -1,0 +1,127 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useOrgContext } from "../global/contexts/OrgContext";
+import urls from "../urls";
+import axios from "axios";
+import Title from "antd/es/typography/Title";
+import { Button, Form, Input } from "antd";
+
+export default function Component() {
+  const router = useRouter();
+  const { boomed, orgValidity, handleOrgValidify } = useOrgContext();
+  const [email, setEmail] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showLoginForm, setShowLoginForm] = useState(false); // New state to control the visibility of the login form
+
+  const onEmailSubmit = async () => {
+    console.log("Performing org search...");
+    // Extract domain from email
+    const domain = email.substring(email.lastIndexOf("@") + 1);
+
+    try {
+      const response = await axios.post(
+        urls.baseURL + "/niamadmin/searchorg",
+        { orgDomain: domain },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("Org valid: ", response.data);
+      setSuccessMessage("Organization valid!");
+      handleOrgValidify();
+      setShowLoginForm(true);
+    } catch (error) {
+      console.log(error.response.data);
+      setSuccessMessage("Organization invalid! Please try the right one.");
+    }
+  };
+
+  const onLoginFormSubmit = async (values) => {
+    console.log("Sending login data....");
+    const formData = {
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      const response = await axios.post(
+        urls.baseURL + "/auth/login",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+
+      handleBoom();
+      router.push("/OrgAdminDash");
+    } catch (error) {
+      console.log(error.response.data);
+      setErrorMessage(error.response.data.message);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  return (
+    <>
+      <Title>Org Validity Check</Title>
+      {!showLoginForm ? (
+        <>
+          <Input
+            placeholder="Enter your email address"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button type="primary" onClick={onEmailSubmit}>
+            Continue
+          </Button>
+        </>
+      ) : (
+        <Form onFinish={onLoginFormSubmit} onFinishFailed={onFinishFailed}>
+          <Form.Item
+            className="username"
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+            ]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
+
+          <Form.Item
+            className="username"
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
+      {successMessage && (
+        <div>
+          <Title level={4} style={{ color: "green" }}>
+            {successMessage}
+          </Title>
+        </div>
+      )}
+    </>
+  );
+}

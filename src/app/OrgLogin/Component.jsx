@@ -24,19 +24,6 @@ export default function OrgLogin() {
   const router = useRouter();
   const [successMessage, setSuccessMessage] = useState("");
 
-  // useEffect(() => {
-  //   if (!orgValidity) {
-  //     console.log("Please validate your domain");
-  //   } else {
-  //     if (!boomed) {
-  //       console.log("Org valid, Please login");
-  //       router.push("/OrgAdminLogin");
-  //     } else {
-  //       console.log("Org valid and Loggedin");
-  //       router.push("/OrgAdminDash");
-  //     }
-  //   }
-  // }, [boomed, orgValidity, router]);
   useEffect(() => {
     if (orgValidity) {
       router.push("/OrgAdminLogin");
