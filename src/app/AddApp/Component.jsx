@@ -23,9 +23,12 @@ export default function Component() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(urls.baseURL + "/auth/user", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        urls.baseURL + "/organization/getemployees",
+        {
+          withCredentials: true,
+        }
+      );
       setUsers(response.data.data);
       console.log("Users fetched: ", response.data.data);
     } catch (error) {

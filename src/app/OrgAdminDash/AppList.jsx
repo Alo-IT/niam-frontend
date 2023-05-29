@@ -25,9 +25,12 @@ export default function AppList() {
         );
         console.log("Apps loaded: ", appsResponse.data.data);
 
-        const usersResponse = await axios.get(urls.baseURL + "/auth/user", {
-          withCredentials: true,
-        });
+        const usersResponse = await axios.get(
+          urls.baseURL + "/organization/getemployees",
+          {
+            withCredentials: true,
+          }
+        );
         setUsers(usersResponse.data.data || []);
         console.log("Users loaded: ", usersResponse.data.data);
       } catch (error) {
