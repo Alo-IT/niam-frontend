@@ -1,10 +1,11 @@
 "use client";
-import OrgLogin from "./OrgLogin/page";
+
+import Dashboard from "./Dashboard/page";
 
 export default function page() {
   return (
     <div>
-      <OrgLogin />
+      <Dashboard />
     </div>
   );
 }

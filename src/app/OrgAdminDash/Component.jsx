@@ -196,7 +196,7 @@ export default function Component() {
         margin: "0 0",
         lineHeight: "1.1em",
       }}
-      onClick={() => router.push("/OrgLogin")}
+      onClick={() => router.push("/OrgAdminLogin")}
     >
       Login
     </Button>

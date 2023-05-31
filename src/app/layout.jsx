@@ -37,8 +37,6 @@ export default function RootLayout({ children }) {
       return "2";
     } else if (typeof path === "string" && path.startsWith("/NiamAdminDash")) {
       return "3";
-    } else if (typeof path === "string" && path.startsWith("/OrgLogin")) {
-      return "4";
     } else if (typeof path === "string" && path.startsWith("/OrgAdminLogin")) {
       return "5";
     } else if (typeof path === "string" && path.startsWith("/OrgAdminDash")) {
@@ -51,7 +49,7 @@ export default function RootLayout({ children }) {
       return "9";
     } else if (typeof path === "string" && path.startsWith("/AddSystem")) {
       return "10";
-    } else if (typeof path === "string" && path.startsWith("/AddSysAdmin")) {
+    } else if (typeof path === "string" && path.startsWith("/AddOrgAdmin")) {
       return "11";
     }
 
@@ -102,14 +100,20 @@ export default function RootLayout({ children }) {
                   <Menu.Item key="1" onClick={() => router.push("/NiamLogin")}>
                     Login
                   </Menu.Item>
-                  <Menu.Item key="2" onClick={() => router.push("/OrgAddForm")}>
-                    Add Organization
-                  </Menu.Item>
                   <Menu.Item
                     key="3"
                     onClick={() => router.push("/NiamAdminDash")}
                   >
                     Dashboard
+                  </Menu.Item>
+                  <Menu.Item key="2" onClick={() => router.push("/OrgAddForm")}>
+                    + Organization
+                  </Menu.Item>
+                  <Menu.Item
+                    key="11"
+                    onClick={() => router.push("/AddOrgAdmin")}
+                  >
+                    + Org Admin
                   </Menu.Item>
                 </SubMenu>
 
@@ -122,9 +126,6 @@ export default function RootLayout({ children }) {
                     marginTop: "20%",
                   }}
                 >
-                  <Menu.Item key="4" onClick={() => router.push("/OrgLogin")}>
-                    Validation
-                  </Menu.Item>
                   <Menu.Item
                     key="5"
                     onClick={() => router.push("/OrgAdminLogin")}

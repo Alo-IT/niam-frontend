@@ -54,7 +54,7 @@ export const OrgAuthProvider = ({ children }) => {
     localStorage.setItem("boomed", false);
     setOrgValidity(false);
     localStorage.setItem("orgValidity", false);
-    router.push("/OrgLogin");
+    router.push("/OrgAdminLogin");
   };
 
   return (

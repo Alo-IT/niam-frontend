@@ -4,6 +4,7 @@ import {
   LogoutOutlined,
   MenuUnfoldOutlined,
   RightOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { useNiamContext } from "../global/contexts/NiamContext";
 import { useRouter } from "next/navigation";
@@ -234,10 +235,14 @@ export default function Component() {
         <p>No org information available</p>
       )}
       <div
-        className="logoutButton"
-        align="middle"
-        justify="center"
-        style={{ width: "100vw" }}
+        className="actionButtons"
+        style={{
+          width: "100vw",
+          display: "flex",
+          justifyContent: "spaceBetween",
+          alignItems: "center",
+          gap: "50px",
+        }}
       >
         <Button
           type="primary"
@@ -249,11 +254,47 @@ export default function Component() {
             padding: "10px 30px",
             margin: "0 0",
             lineHeight: "1.1em",
+            position: "fixed",
+            top: "20px",
+            right: "40px",
           }}
           icon={<LogoutOutlined />}
           onClick={handleSignout}
         >
           Logout
+        </Button>
+
+        <Button
+          type="primary"
+          size="large"
+          style={{
+            background: "orange",
+            color: "white",
+            fontWeight: 500,
+            padding: "10px 30px",
+            margin: "0 0",
+            lineHeight: "1.1em",
+          }}
+          icon={<PlusOutlined />}
+          onClick={() => router.push("/OrgAddForm")}
+        >
+          Add Organization
+        </Button>
+        <Button
+          type="primary"
+          size="large"
+          style={{
+            background: "purple",
+            color: "white",
+            fontWeight: 500,
+            padding: "10px 30px",
+            margin: "0 0",
+            lineHeight: "1.1em",
+          }}
+          icon={<PlusOutlined />}
+          onClick={() => router.push("/AddOrgAdmin")}
+        >
+          Add Org Admin
         </Button>
       </div>
     </>
