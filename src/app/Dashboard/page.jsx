@@ -1,13 +1,10 @@
 "use client";
-
 import Title from "antd/es/typography/Title";
-import { Button, Form, Input, Tabs } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-const { TabPane } = Tabs;
-import NiamLogin from "../NiamLogin/page";
+import { Tabs } from "antd";
+import { useState } from "react";
+import NiamLogin from "../niamLogin/page";
 import OrgAdminLogin from "../OrgAdminLogin/page";
-import OpsManLogin from "../OpsManLogin/page";
+const { TabPane } = Tabs;
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("niamAdmin");
