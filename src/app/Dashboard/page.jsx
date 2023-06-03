@@ -23,11 +23,8 @@ export default function Dashboard() {
         <TabPane tab="Niam Admin" key="niamAdmin">
           <NiamLogin />
         </TabPane>
-        <TabPane tab="Org Admin" key="orgAdmin">
+        <TabPane tab="Organization" key="orgAdmin">
           <OrgAdminLogin />
-        </TabPane>
-        <TabPane tab="Ops Manager" key="opsMan">
-          <OpsManLogin />
         </TabPane>
       </Tabs>
     </>

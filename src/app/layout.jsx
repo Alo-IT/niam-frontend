@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Layout, Menu, theme } from "antd";
+import Image from "next/image";
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -72,21 +73,42 @@ export default function RootLayout({ children }) {
               trigger={null}
               collapsible
               collapsed={collapsed}
+              onCollapse={handleCollapse}
+              breakpoint="md"
+              collapsedWidth={0}
+              width={200}
+              theme="dark"
               style={{
-                height: "95vh",
-                margin: 0,
-                borderRadius: 10,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                overflow: "auto",
+                height: "100vh",
+                position: "fixed",
+                left: 0,
               }}
             >
               <div className="demo-logo-vertical" />
+              <div
+                className="logoholder"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  paddingTop: 40,
+                }}
+              >
+                <Logo
+                  src="/images/niamofficiallogo.png"
+                  width={121.52}
+                  height={106.96}
+                  resizeMode="contain"
+                />
+              </div>
+
               <Menu
                 theme="dark"
                 mode="inline"
                 defaultSelectedKeys={[selectedMenuItem]}
                 onClick={handleMenuClick}
+                collapsible
+                collapsedWidth="200px"
               >
                 {/* Niam Admin */}
                 <SubMenu
@@ -166,12 +188,6 @@ export default function RootLayout({ children }) {
                   </Menu.Item>
                   <Menu.Item key="10" onClick={() => router.push("/AddSystem")}>
                     Add System
-                  </Menu.Item>
-                  <Menu.Item
-                    key="11"
-                    onClick={() => router.push("/AddSysAdmin")}
-                  >
-                    Add Sys Admin
                   </Menu.Item>
                 </SubMenu>
               </Menu>
