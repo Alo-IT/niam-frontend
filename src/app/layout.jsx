@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Layout, Menu, theme } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -23,6 +24,20 @@ export default function RootLayout({ children }) {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const menuItems = {
+    "/NiamLogin": "1",
+    "/OrgAddForm": "2",
+    "/NiamAdminDash": "3",
+    "/OrgAdminLogin": "5",
+    "/OrgAdminDash": "6",
+    "/AddEmployee": "7",
+    "/OpsManLogin": "8",
+    "/OpsManDash": "9",
+    "/AddSystem": "10",
+    "/AddOrgAdmin": "11",
+    "/AddSysRole": "12",
+  };
+
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
@@ -32,34 +47,22 @@ export default function RootLayout({ children }) {
   };
 
   const getSelectedMenuItem = (path) => {
-    if (typeof path === "string" && path.startsWith("/NiamLogin")) {
-      return "1";
-    } else if (typeof path === "string" && path.startsWith("/OrgAddForm")) {
-      return "2";
-    } else if (typeof path === "string" && path.startsWith("/NiamAdminDash")) {
-      return "3";
-    } else if (typeof path === "string" && path.startsWith("/OrgAdminLogin")) {
-      return "5";
-    } else if (typeof path === "string" && path.startsWith("/OrgAdminDash")) {
-      return "6";
-    } else if (typeof path === "string" && path.startsWith("/AddEmployee")) {
-      return "7";
-    } else if (typeof path === "string" && path.startsWith("/OpsManLogin")) {
-      return "8";
-    } else if (typeof path === "string" && path.startsWith("/OpsManDash")) {
-      return "9";
-    } else if (typeof path === "string" && path.startsWith("/AddSystem")) {
-      return "10";
-    } else if (typeof path === "string" && path.startsWith("/AddOrgAdmin")) {
-      return "11";
+    for (const [menuItemPath, menuItemKey] of Object.entries(menuItems)) {
+      if (typeof path === "string" && path.startsWith(menuItemPath)) {
+        return menuItemKey;
+      }
     }
-
     return "";
   };
 
   useEffect(() => {
     setSelectedMenuItem(getSelectedMenuItem(router.pathname));
   }, [router]);
+
+  const handleCollapse = (collapsed) => {
+    setCollapsed(collapsed);
+  };
+
   return (
     <>
       <html lang="en">
@@ -68,7 +71,7 @@ export default function RootLayout({ children }) {
           <meta name="description" content={metadata.description} />
         </head>
         <body>
-          <Layout>
+          <Layout style={{ minHeight: "100vh" }}>
             <Sider
               trigger={null}
               collapsible
@@ -80,9 +83,12 @@ export default function RootLayout({ children }) {
               theme="dark"
               style={{
                 overflow: "auto",
-                height: "100vh",
                 position: "fixed",
+                zIndex: 1,
+                height: "100%",
                 left: 0,
+                top: 0,
+                borderRadius: "0 10px 10px 0",
               }}
             >
               <div className="demo-logo-vertical" />
@@ -94,12 +100,14 @@ export default function RootLayout({ children }) {
                   paddingTop: 40,
                 }}
               >
-                <Logo
-                  src="/images/niamofficiallogo.png"
-                  width={121.52}
-                  height={106.96}
-                  resizeMode="contain"
-                />
+                <Link href="/Dashboard">
+                  <Image
+                    src="/images/niamofficiallogo.png"
+                    width={121.52}
+                    height={106.96}
+                    resizeMode="contain"
+                  />
+                </Link>
               </div>
 
               <Menu
@@ -189,11 +197,17 @@ export default function RootLayout({ children }) {
                   <Menu.Item key="10" onClick={() => router.push("/AddSystem")}>
                     Add System
                   </Menu.Item>
+                  <Menu.Item
+                    key="11"
+                    onClick={() => router.push("/AddSysRole")}
+                  >
+                    Add System Role
+                  </Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>
 
-            <Layout>
+            <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
               <Header
                 style={{
                   padding: 0,

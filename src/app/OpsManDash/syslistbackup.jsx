@@ -10,7 +10,7 @@ import axios from "axios";
 import urls from "../urls";
 import { useForm } from "antd/lib/form/Form";
 
-export default function SystemList() {
+export default function sysl() {
   const router = useRouter();
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const [successMessage, setSuccessMessage] = useState("");
