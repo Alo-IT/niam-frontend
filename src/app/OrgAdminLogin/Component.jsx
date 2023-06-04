@@ -1,28 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import urls from "../urls";
-import {
-  Layout,
-  Menu,
-  Button,
-  Row,
-  Col,
-  Typography,
-  Form,
-  Input,
-  Switch,
-} from "antd";
+import { Layout, Button, Row, Col, Typography, Form, Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
-import signinbg from "../../assets/images/img-signin.jpg";
-import {
-  DribbbleOutlined,
-  TwitterOutlined,
-  InstagramOutlined,
-  GithubOutlined,
-} from "@ant-design/icons";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useOrgContext } from "../global/contexts/OrgContext";
@@ -30,20 +12,11 @@ function onChange(checked) {
   console.log(`switch to ${checked}`);
 }
 const { Title } = Typography;
-
-const { Header, Footer, Content } = Layout;
+const { Content } = Layout;
 
 export default function Component() {
-  const {
-    boomed,
-    setBoomed,
-    orgValidity,
-    setOrgValidity,
-    handleBoom,
-    handleBoomout,
-    handleOrgValidify,
-  } = useOrgContext();
-
+  const { boomed, handleBoom, handleOrgValidify } = useOrgContext();
+  const [form] = Form.useForm();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -113,87 +86,158 @@ export default function Component() {
 
   return (
     <>
-      <Title>Org Admin Login</Title>
+      {/* <Title>Org Admin Login</Title> */}
       {!showLoginForm ? (
         <>
-          <Form
-            layout="vertical"
+          <Layout
+            className="layout-default layout-signin"
             style={{
-              width: "25vw",
+              borderRadius: 20,
+              padding: 0,
+              backgroundColor: "transparent",
             }}
           >
-            <Form.Item label="Email" required>
-              <Input
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Item>
-            <Button htmlType="submit" type="primary" onClick={onEmailSubmit}>
-              Continue
-            </Button>
-          </Form>
+            <Content className="signin">
+              <Row gutter={[24, 0]}>
+                <Col
+                  xs={{ span: 24, offset: 0 }}
+                  lg={{ span: 8, offset: 2 }}
+                  md={{ span: 12 }}
+                >
+                  <Title className="font-regular text-muted" level={5}>
+                    Enter your credentials to sign in
+                  </Title>
+                  <Form
+                    layout="vertical"
+                    required
+                    size="large"
+                    style={{
+                      width: "25vw",
+                      height: "60vh",
+                    }}
+                    form={form}
+                  >
+                    <Form.Item label="Email">
+                      <Input
+                        placeholder="abc@xyz.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your email!",
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      onClick={onEmailSubmit}
+                      style={{
+                        width: "100%",
+                        background:
+                          "linear-gradient(270deg, #4E7CF2 0%, #00A99D 33.33%, #00A99D 66.67%, #4E7CF2 100%)",
+                        border: "1px solid #7D88A1",
+                      }}
+                    >
+                      Continue
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+            </Content>
+          </Layout>
         </>
       ) : (
-        <Form
-          layout="vertical"
-          onFinish={onLoginFormSubmit}
-          onFinishFailed={onFinishFailed}
+        <Layout
+          className="layout-default layout-signin"
           style={{
-            width: "25vw",
+            borderRadius: 20,
+            padding: 0,
+            backgroundColor: "transparent",
           }}
         >
-          <Form.Item
-            className="username"
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your email!",
-              },
-            ]}
-            initialValue={email}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <Input placeholder={email} disabled />
-              <Button type="link" onClick={handleEmailChange}>
-                Change
-              </Button>
-            </div>
-          </Form.Item>
+          <Content className="signin">
+            <Row gutter={[24, 0]}>
+              <Col
+                xs={{ span: 24, offset: 0 }}
+                lg={{ span: 8, offset: 2 }}
+                md={{ span: 12 }}
+              >
+                <Form
+                  layout="vertical"
+                  size="large"
+                  onFinish={onLoginFormSubmit}
+                  onFinishFailed={onFinishFailed}
+                  style={{
+                    width: "25vw",
+                  }}
+                >
+                  <Form.Item
+                    className="username"
+                    label="Email"
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your email!",
+                      },
+                    ]}
+                    initialValue={email}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Input placeholder={email} disabled />
+                      <Button type="link" onClick={handleEmailChange}>
+                        Change
+                      </Button>
+                    </div>
+                  </Form.Item>
 
-          <Form.Item
-            className="username"
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-          >
-            {/* <Input placeholder="Password" /> */}
-            <Input.Password
-              placeholder="Input Password"
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-            />
-          </Form.Item>
+                  <Form.Item
+                    className="username"
+                    label="Password"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    {/* <Input placeholder="Password" /> */}
+                    <Input.Password
+                      placeholder="*************"
+                      iconRender={(visible) =>
+                        visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                      }
+                    />
+                  </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-              Login
-            </Button>
-          </Form.Item>
-        </Form>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      style={{
+                        width: "100%",
+                        background:
+                          "linear-gradient(270deg, #4E7CF2 0%, #00A99D 33.33%, #00A99D 66.67%, #4E7CF2 100%)",
+                        border: "1px solid #7D88A1",
+                      }}
+                    >
+                      Log In
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Col>
+            </Row>
+          </Content>
+        </Layout>
       )}
       {successMessage && (
         <div>

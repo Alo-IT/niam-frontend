@@ -67,6 +67,7 @@ export default function SystemList() {
 
     fetchData();
   }, []);
+  // useEffect(() => {}, [setSystems]);
 
   const editRow = (record) => {
     form.setFieldsValue({ ...record });
@@ -106,8 +107,8 @@ export default function SystemList() {
         return system;
       });
 
-      setSystems(updatedSystems);
-      setEditingKey("");
+      setSystems(updatedSystems); // Update the systems state with the updated record
+      setEditingKey(""); // Clear the editing key
       setSuccessMessage("System updated successfully.");
     } catch (error) {
       console.log("Error updating system:", error);
@@ -242,8 +243,6 @@ export default function SystemList() {
   ];
 
   const handleEdit = (record) => {
-    // Implement the edit functionality here
-    // Send PATCH request to `/system/system/_id` with the modified data
     const {
       _id,
       system_Name,

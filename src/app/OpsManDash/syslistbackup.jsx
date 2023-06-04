@@ -10,7 +10,7 @@ import axios from "axios";
 import urls from "../urls";
 import { useForm } from "antd/lib/form/Form";
 
-export default function sysl() {
+export default function Sysl() {
   const router = useRouter();
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const [successMessage, setSuccessMessage] = useState("");
@@ -242,8 +242,6 @@ export default function sysl() {
   ];
 
   const handleEdit = (record) => {
-    // Implement the edit functionality here
-    // Send PATCH request to `/system/system/_id` with the modified data
     const {
       _id,
       system_Name,

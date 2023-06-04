@@ -16,14 +16,24 @@ export default function Dashboard() {
   return (
     <>
       {/* <Title>Who Are You?</Title> */}
-      <Tabs activeKey={activeTab} onChange={handleTabChange}>
-        <TabPane tab="Niam Admin" key="niamAdmin">
-          <NiamLogin />
-        </TabPane>
-        <TabPane tab="Organization" key="orgAdmin">
-          <OrgAdminLogin />
-        </TabPane>
-      </Tabs>
+      <div
+        style={{
+          backgroundImage: "url(/images/niamsigninbg.svg)",
+          backgroundSize: "auto 80vh",
+          backgroundPosition: "top right",
+          backgroundRepeat: "no-repeat",
+          borderRadius: 20,
+        }}
+      >
+        <Tabs activeKey={activeTab} onChange={handleTabChange}>
+          <TabPane tab="Niam Admin" key="niamAdmin">
+            <NiamLogin />
+          </TabPane>
+          <TabPane tab="Organization" key="orgAdmin">
+            <OrgAdminLogin />
+          </TabPane>
+        </Tabs>
+      </div>
     </>
   );
 }

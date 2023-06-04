@@ -86,17 +86,13 @@ export default function Component() {
     <>
       <Layout
         className="layout-default layout-signin"
-        style={{ borderRadius: 20, padding: "10vh 0", background: "#fff" }}
+        style={{
+          borderRadius: 20,
+          padding: 0,
+          backgroundColor: "transparent",
+        }}
       >
-        <Content
-          className="signin"
-          style={{
-            backgroundImage: "url(/images/niamsigninbg.svg)",
-            backgroundSize: "contain",
-            backgroundPosition: "right",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
+        <Content className="signin">
           <Row gutter={[24, 0]}>
             <Col
               xs={{ span: 24, offset: 0 }}
@@ -104,7 +100,7 @@ export default function Component() {
               md={{ span: 12 }}
             >
               <Title className="font-regular text-muted" level={5}>
-                Enter your email and password to sign in
+                Enter your credentials to sign in
               </Title>
               <Form
                 onFinish={onFinish}
@@ -122,7 +118,7 @@ export default function Component() {
                     { required: true, message: "Please input your email!" },
                   ]}
                 >
-                  <Input placeholder="Email" />
+                  <Input placeholder="abc@xyz.com" />
                 </Form.Item>
 
                 <Form.Item
@@ -133,7 +129,7 @@ export default function Component() {
                     { required: true, message: "Please input your password!" },
                   ]}
                 >
-                  <Input.Password placeholder="Password" />
+                  <Input.Password placeholder="************" />
                 </Form.Item>
 
                 <Form.Item
@@ -165,25 +161,6 @@ export default function Component() {
                 </Form.Item>
               </Form>
             </Col>
-            {/* <Col
-              className="sign-img"
-              style={{
-                // padding: 12,
-                display: "flex",
-                alignItems: "flex-start",
-                // justifyContent: "center",
-                right: 0,
-              }}
-              xs={{ span: 24 }}
-              lg={{ span: 12 }}
-              md={{ span: 12 }}
-            >
-              <Image
-                src={signinbg}
-                alt=""
-                style={{ width: "30vw", height: "auto" }}
-              />
-            </Col> */}
           </Row>
         </Content>
       </Layout>

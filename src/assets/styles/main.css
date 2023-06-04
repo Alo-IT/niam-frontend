@@ -2111,9 +2111,7 @@ body {
 .sign-in {
   padding: 0 20px;
 }
-.layout-default .ant-layout-content {
-  padding-top: 40px;
-}
+
 .font-regular {
   font-weight: 400;
 }
