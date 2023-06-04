@@ -23,6 +23,7 @@ export default function Dashboard() {
           backgroundPosition: "top right",
           backgroundRepeat: "no-repeat",
           borderRadius: 20,
+          height: "80vh",
         }}
       >
         <Tabs activeKey={activeTab} onChange={handleTabChange}>

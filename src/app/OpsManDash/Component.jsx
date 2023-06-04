@@ -111,6 +111,16 @@ export default function Component() {
       >
         Add System Role
       </Button>
+
+      <Button
+        type="primary"
+        onClick={() => router.push("/AddSysRight")}
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Add Right
+      </Button>
       {/* Action Buttons */}
       <Button
         type="primary"
