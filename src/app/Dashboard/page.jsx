@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Title>Who Are You?</Title>
+      {/* <Title>Who Are You?</Title> */}
       <Tabs activeKey={activeTab} onChange={handleTabChange}>
         <TabPane tab="Niam Admin" key="niamAdmin">
           <NiamLogin />
