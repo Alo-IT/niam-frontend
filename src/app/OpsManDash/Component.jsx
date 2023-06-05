@@ -121,6 +121,24 @@ export default function Component() {
       >
         Add Right
       </Button>
+      <Button
+        type="primary"
+        onClick={() => router.push("/AddRoleFlow")}
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Add Role Flow
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => router.push("/AddRightFlow")}
+        style={{
+          marginLeft: 40,
+        }}
+      >
+        Add Right Flow
+      </Button>
       {/* Action Buttons */}
       <Button
         type="primary"
