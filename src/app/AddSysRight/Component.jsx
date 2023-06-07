@@ -45,18 +45,20 @@ export default function back() {
     async function fetchRoles() {
       if (selectedSystemId) {
         try {
-          const rolesResponse = await axios.get(
+          const response = await axios.get(
+            // urls.baseURL + "/system/allrole/",
             urls.baseURL + `/system/allrole/${selectedSystemId}`,
             {
               withCredentials: true,
             }
           );
-          setRoles(rolesResponse.data.data || []);
-          localStorage.setItem(
-            "roles",
-            JSON.stringify(rolesResponse.data.data || [])
+          const systemData = response.data.data.find((item) =>
+            item.system.some((sys) => sys._id === selectedSystemId)
           );
-          console.log("Roles loaded:", rolesResponse.data.data);
+          const rolesData = systemData ? systemData.roles : [];
+          setRoles(rolesData);
+          localStorage.setItem("roles", JSON.stringify(rolesData));
+          console.log("Roles loaded:", rolesData);
         } catch (error) {
           console.log(error.response.data);
         }
@@ -75,8 +77,11 @@ export default function back() {
     setSelectedRole(value);
   };
 
-  const handleRightChange = (value) => {
-    setSelectedRight(value);
+  // const handleRightChange = (value) => {
+  //   setSelectedRight(value);
+  // };
+  const handleRightChange = (e) => {
+    setSelectedRight(e.target.value);
   };
 
   const handleSave = async () => {
@@ -105,7 +110,14 @@ export default function back() {
   return (
     <>
       <Title>AddSysRight</Title>
-      <Select value={selectedSystemId} onChange={handleSystemChange}>
+
+      <Select
+        value={selectedSystemId}
+        onChange={handleSystemChange}
+        style={{
+          marginRight: 30,
+        }}
+      >
         <Option value="">Select a system</Option>
         {systems.map((system) => (
           <Option key={system._id} value={system._id}>
@@ -115,22 +127,43 @@ export default function back() {
       </Select>
       {selectedSystemId && (
         <>
-          <Select value={selectedRole} onChange={handleRoleChange}>
+          <Select
+            value={selectedRole}
+            onChange={handleRoleChange}
+            style={{
+              marginRight: 30,
+            }}
+          >
             <Option value="">Select a role</Option>
             {roles.map((role) => (
-              <Option key={role._id} value={role._id}>
-                {role.role_name}
+              <Option key={role.role_Id} value={role.role_Id}>
+                {role.role_Name}
               </Option>
             ))}
           </Select>
-          <Select value={selectedRight} onChange={handleRightChange}>
+          {/* <Select value={selectedRight} onChange={handleRightChange}>
             <Option value="">Select a right</Option>
             <Option value="Read">Read</Option>
             <Option value="Edit">Edit</Option>
             <Option value="Admin">Admin</Option>
-          </Select>
-          <Button type="primary" onClick={handleSave}>
-            Save
+          </Select> */}
+          <Input
+            value={selectedRight}
+            onChange={handleRightChange}
+            placeholder="Right Name"
+            style={{
+              width: "20vw",
+            }}
+          />
+          <br />
+          <Button
+            type="primary"
+            onClick={handleSave}
+            style={{
+              marginTop: 20,
+            }}
+          >
+            Assign Right
           </Button>
           {successMessage && <p>{successMessage}</p>}
         </>
