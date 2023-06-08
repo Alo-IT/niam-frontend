@@ -89,7 +89,7 @@ export default function Component() {
         </Form>
       )}
       {/* Navigation Buttons */}
-      <Button
+      {/* <Button
         type="primary"
         icon={<LeftCircleTwoTone />}
         style={{
@@ -119,7 +119,7 @@ export default function Component() {
         onClick={handleBoomout}
       >
         Log Out
-      </Button>
+      </Button> */}
     </>
   );
 }

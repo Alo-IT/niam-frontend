@@ -151,7 +151,7 @@ export default function Component() {
       </Form>
 
       {successMessage && <div>{successMessage}</div>}
-      <Button
+      {/* <Button
         type="primary"
         style={{
           position: "fixed",
@@ -180,7 +180,7 @@ export default function Component() {
         onClick={handleBoomout}
       >
         Log Out
-      </Button>
+      </Button> */}
     </>
   );
 }

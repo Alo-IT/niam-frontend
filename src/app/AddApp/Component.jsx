@@ -142,7 +142,7 @@ export default function Component() {
           Create App
         </Button>
       </Form>
-      <Button
+      {/* <Button
         type="primary"
         style={{
           position: "fixed",
@@ -152,8 +152,8 @@ export default function Component() {
         onClick={() => router.push("/OrgAdminLogin")}
       >
         Go Back
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         type="primary"
         size="large"
         style={{
@@ -171,7 +171,7 @@ export default function Component() {
         onClick={handleBoomout}
       >
         Log Out
-      </Button>
+      </Button> */}
     </>
   );
 }

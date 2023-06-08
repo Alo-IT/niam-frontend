@@ -159,7 +159,7 @@ export default function CreateEmployee() {
           </Title>
         </div>
       )}
-      <Button
+      {/* <Button
         type="primary"
         style={{
           position: "fixed",
@@ -188,7 +188,7 @@ export default function CreateEmployee() {
         onClick={handleBoomout}
       >
         Log Out
-      </Button>
+      </Button> */}
     </>
   );
 }

@@ -4,6 +4,7 @@ import { Tabs } from "antd";
 import { useState } from "react";
 import NiamLogin from "../niamLogin/page";
 import OrgAdminLogin from "../OrgAdminLogin/page";
+import SiteContent from "../Site/SiteContent";
 const { TabPane } = Tabs;
 
 export default function Dashboard() {
@@ -16,25 +17,27 @@ export default function Dashboard() {
   return (
     <>
       {/* <Title>Who Are You?</Title> */}
-      <div
-        style={{
-          backgroundImage: "url(/images/niamsigninbg.svg)",
-          backgroundSize: "auto 80vh",
-          backgroundPosition: "top right",
-          backgroundRepeat: "no-repeat",
-          borderRadius: 20,
-          height: "80vh",
-        }}
-      >
-        <Tabs activeKey={activeTab} onChange={handleTabChange}>
-          <TabPane tab="Niam Admin" key="niamAdmin">
-            <NiamLogin />
-          </TabPane>
-          <TabPane tab="Organization" key="orgAdmin">
-            <OrgAdminLogin />
-          </TabPane>
-        </Tabs>
-      </div>
+      <SiteContent>
+        <div
+          style={{
+            backgroundImage: "url(/images/niamsigninbg.svg)",
+            backgroundSize: "auto 80vh",
+            backgroundPosition: "top right",
+            backgroundRepeat: "no-repeat",
+            borderRadius: 20,
+            height: "80vh",
+          }}
+        >
+          <Tabs activeKey={activeTab} onChange={handleTabChange}>
+            <TabPane tab="Niam Admin" key="niamAdmin">
+              <NiamLogin />
+            </TabPane>
+            <TabPane tab="Organization" key="orgAdmin">
+              <OrgAdminLogin />
+            </TabPane>
+          </Tabs>
+        </div>
+      </SiteContent>
     </>
   );
 }
