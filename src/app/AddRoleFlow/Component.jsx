@@ -11,13 +11,48 @@ const { Option } = Select;
 export default function Component() {
   const { boomed, orgValidity, handleBoomout } = useOrgContext();
   const router = useRouter();
-  const [successMessage, setSuccessMessage] = useState("");
-  const [systems, setSystems] = useState([]);
-  const [selectedSystemId, setSelectedSystemId] = useState("");
-  const [roles, setRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("");
-  const [flow, setFlow] = useState("");
 
+  // Fetch apps
+  useEffect(() => {
+    async function fetchApps() {
+      try {
+        const appsResponse = await axios.get(urls.baseURL + "/app/app", {
+          withCredentials: true,
+        });
+        setApps(appsResponse.data.data || []);
+        localStorage.setItem(
+          "apps",
+          JSON.stringify(appsResponse.data.data || [])
+        );
+        console.log("Apps loaded (1): ", appsResponse.data.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
+    fetchApps();
+  }, []);
+
+  // Fetch Employees
+  useEffect(() => {
+    async function fetchEmployees() {
+      try {
+        const usersResponse = await axios.get(
+          urls.baseURL + "/organization/getemployees",
+          {
+            withCredentials: true,
+          }
+        );
+        setUsers(usersResponse.data.data || []);
+
+        console.log("Users loaded (1): ", usersResponse.data.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
+    fetchEmployees();
+  }, []);
+
+  // Fetch Systems
   useEffect(() => {
     async function fetchSystem() {
       try {
@@ -39,7 +74,8 @@ export default function Component() {
     }
 
     fetchSystem();
-  }, []);
+  }, [setApps]);
+
   useEffect(() => {
     async function fetchRoles() {
       if (selectedSystemId) {
@@ -65,6 +101,9 @@ export default function Component() {
     fetchRoles();
   }, [selectedSystemId]);
 
+  const handleAppChange = (value) => {
+    setSeletedAppId(value);
+  };
   const handleSystemChange = (value) => {
     setSelectedSystemId(value);
     setSelectedRole("");

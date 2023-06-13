@@ -91,7 +91,8 @@ export default function Component() {
               color="geekblue"
               style={{
                 fontSize: "1em",
-                padding: "5px 20px",
+                padding: "0px 20px 5px 20px",
+                borderRadius: 20,
               }}
             >
               <Title
@@ -99,7 +100,7 @@ export default function Component() {
                 style={{
                   color: "green",
                   fontSize: "1em",
-                  lineHeight: "0.7em",
+                  lineHeight: "0.3em",
                   fontWeight: 600,
                 }}
               >
@@ -115,6 +116,24 @@ export default function Component() {
             gap: 10,
           }}
         >
+          <Button
+            type="primary"
+            style={{
+              background: "purple",
+            }}
+            onClick={() => router.push("/AddRoleFlow")}
+          >
+            Add Role Flow
+          </Button>
+          <Button
+            type="primary"
+            style={{
+              background: "darkblue",
+            }}
+            onClick={() => router.push("/")}
+          >
+            Add Right Flow
+          </Button>
           <Button
             type="primary"
             style={{
